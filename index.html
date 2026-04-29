@@ -190,6 +190,42 @@
       transform: translateY(-1px);
     }
 
+    /* —— Video embed —— */
+    .video-section {
+      padding: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+      text-align: center;
+    }
+
+    .video-section-label {
+      margin: 0 0 1rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .video-embed {
+      position: relative;
+      width: 100%;
+      max-width: min(52rem, 100%);
+      margin-inline: auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0a0a0a;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
     /* —— Partners —— (narrower than hero for hierarchy) */
     .partners.container {
       max-width: min(48rem, 100% - 2rem);
@@ -981,6 +1017,20 @@
       </h1>
       <div class="hero-cta">
         <a class="btn-cta" href="#">View Active Listings</a>
+      </div>
+    </section>
+
+    <section class="video-section container" aria-labelledby="video-section-title">
+      <p class="video-section-label" id="video-section-title">Watch the overview</p>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/kdor0DiBDF8"
+          title="YouTube video: Resource Marketplace overview"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
     </section>
 
