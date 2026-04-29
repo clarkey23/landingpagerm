@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resource Marketplace</title>
+  <meta name="description" content="A marketplace for businesses. Turn waste into opportunity.">
+  <style>
+    :root {
+      --bg: #f9f8f9;
+      --primary: #5abab2;
+      --primary-hover: #4aa89f;
+      --text: #0a0a0a;
+      --muted: #3d3d3d;
+      --card: #ffffff;
+      --card-soft: #fcfcfc;
+      --line: #e4e2e6;
+      --radius: 16px;
+      --maxw: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(100% - 2rem, var(--maxw));
+      margin-inline: auto;
+    }
+
+    /* —— Header —— */
+    .site-header {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 86%, #ffffff 14%);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+    }
+
+    .site-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .site-logo {
+      display: block;
+      height: 40px;
+      width: auto;
+    }
+
+    .site-logo img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .link-login {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .link-login:hover {
+      text-decoration: underline;
+    }
+
+    .btn-signup {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.12s ease;
+    }
+
+    .btn-signup:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-signup:focus-visible,
+    .btn-cta:focus-visible,
+    .btn-outline:focus-visible,
+    .link-login:focus-visible,
+    .link-learn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* —— Hero —— */
+    .hero {
+      text-align: center;
+      min-height: min(52vh, 440px);
+      padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(1.75rem, 4vw, 2.75rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .hero h1 {
+      margin: 0 auto;
+      max-width: min(56rem, 100%);
+      font-size: clamp(1.55rem, 3.1vw, 2.35rem);
+      font-weight: 500;
+      line-height: 1.32;
+      letter-spacing: -0.02em;
+      min-height: 2.65em;
+    }
+
+    .hero-lead {
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .typing-shell {
+      display: inline-grid;
+      text-align: left;
+    }
+
+    .typing-placeholder {
+      visibility: hidden;
+      font-weight: 500;
+      grid-area: 1 / 1;
+    }
+
+    .typing-overlay {
+      grid-area: 1 / 1;
+    }
+
+    .typing-text { font-weight: 500; }
+
+    .typing-caret {
+      display: inline-block;
+      width: 0.07em;
+      height: 0.95em;
+      vertical-align: -0.06em;
+      margin-left: 0.06em;
+      background: var(--text);
+      animation: blink 0.85s steps(1) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-cta {
+      margin-top: clamp(1.35rem, 3.2vw, 2rem);
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.72rem 1.35rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      transition: transform 0.12s ease;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-1px);
+    }
+
+    /* —— Partners —— (narrower than hero for hierarchy) */
+    .partners.container {
+      max-width: min(48rem, 100% - 2rem);
+    }
+
+    .partners {
+      padding: clamp(1.25rem, 3vw, 2rem) 0 3.5rem;
+    }
+
+    .partners-label {
+      margin: 0 0 1.1rem;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .partner-viewport {
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .partner-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 3rem;
+      animation: partnerMarquee 28s linear infinite;
+    }
+
+    .partner-logo {
+      flex: 0 0 auto;
+      width: 142px;
+      height: 62px;
+      object-fit: contain;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .partner-logo:hover {
+      opacity: 1;
+    }
+
+    @keyframes partnerMarquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* —— Feature: detailed listings —— */
+    .feature-spotlight {
+      padding: clamp(2rem, 5vw, 3.25rem) 0;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    .feature-spotlight-inner {
+      max-width: var(--maxw);
+      margin-inline: auto;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      gap: clamp(1.75rem, 4vw, 3rem);
+      align-items: center;
+    }
+
+    .feature-copy h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .feature-copy > p {
+      margin: 0.75rem 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+      max-width: 38ch;
+    }
+
+    .feature-points {
+      margin: 1.15rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+      font-size: 0.95rem;
+      color: #2a2a2a;
+    }
+
+    .feature-points li {
+      position: relative;
+      padding-left: 1.15rem;
+    }
+
+    .feature-points li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .feature-mock {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 1rem 1rem 1.1rem;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+    }
+
+    .mock-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.65rem;
+    }
+
+    .mock-field {
+      margin-bottom: 0.65rem;
+    }
+
+    .mock-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .mock-label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.28rem;
+    }
+
+    .mock-label .req {
+      color: #c43d3d;
+      font-weight: 800;
+    }
+
+    .mock-input,
+    .mock-textarea {
+      display: block;
+      width: 100%;
+      border: 1px solid #dad8de;
+      border-radius: 6px;
+      background: #f7f7f8;
+      min-height: 34px;
+    }
+
+    .mock-input--sm {
+      min-height: 30px;
+      background: #fff;
+    }
+
+    .mock-textarea {
+      min-height: 52px;
+    }
+
+    .mock-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .mock-row3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.45rem;
+    }
+
+    .mock-row-split {
+      display: grid;
+      grid-template-columns: 1fr 72px;
+      gap: 0.45rem;
+      align-items: end;
+    }
+
+    .mock-pill {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.45rem 0.25rem;
+      line-height: 1.1;
+    }
+
+    .mock-attach {
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mock-attach span:last-child {
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      font-size: 0.78rem;
+    }
+
+    .feature-grid--browse {
+      grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+    }
+
+    .feature-grid--browse .feature-copy {
+      justify-self: end;
+      width: 100%;
+      max-width: min(30rem, 100%);
+    }
+
+    .filter-mock {
+      max-width: 300px;
+      padding: 1rem 1rem 1.1rem;
+    }
+
+    .filter-mock .mock-section-title {
+      margin: 0.55rem 0 0.28rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .filter-mock .mock-section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .filter-mock .mock-range-label,
+    .filter-mock .mock-currency {
+      color: var(--primary);
+    }
+
+    .filter-mock .mock-range-min,
+    .filter-mock .mock-range-max {
+      border: 1px solid #dad8de;
+      border-radius: 6px;
+      background: #f7f7f8;
+    }
+
+    .filter-mock .mock-input.mock-input--sm {
+      min-height: 34px;
+      background: #f7f7f8;
+    }
+
+    .filter-mock .mock-check {
+      color: #2a2a2a;
+    }
+
+    .filter-mock .mock-check-box {
+      border-color: #dad8de;
+    }
+
+    .filter-mock .mock-doc-sub {
+      color: var(--primary);
+    }
+
+    .mock-micro {
+      margin: 0.55rem 0 0.3rem;
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .mock-check {
+      display: flex;
+      align-items: center;
+      gap: 0.38rem;
+      font-size: 0.7rem;
+      color: #222;
+      margin: 0.22rem 0;
+      line-height: 1.2;
+    }
+
+    .mock-check-box {
+      width: 11px;
+      height: 11px;
+      border: 1px solid #b8b6bc;
+      border-radius: 2px;
+      flex-shrink: 0;
+      background: #fff;
+    }
+
+    .mock-state-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.15rem 0.45rem;
+    }
+
+    .mock-range-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #444;
+      margin: 0.45rem 0 0.2rem;
+    }
+
+    .mock-range-row {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .mock-range-min,
+    .mock-range-max {
+      flex: 1;
+      min-height: 28px;
+      border: 1px solid #dad8de;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .mock-range-sep {
+      font-size: 0.75rem;
+      color: #888;
+      flex-shrink: 0;
+    }
+
+    .mock-currency {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #444;
+      flex-shrink: 0;
+    }
+
+    .mock-doc-sub {
+      font-size: 0.65rem;
+      font-weight: 800;
+      margin: 0.35rem 0 0.2rem;
+      color: var(--text);
+    }
+
+    .mock-hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 0.55rem 0 0.35rem;
+    }
+
+    .testimonials {
+      padding: 0.8rem 0 4.2rem;
+    }
+
+    .testimonials h2 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+    }
+
+    .testimonials-sub {
+      margin: 0.65rem 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.02rem;
+      font-weight: 500;
+    }
+
+    .testimonials-grid {
+      margin-top: 1.8rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .testimonial-card {
+      background: var(--card-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem 1.1rem;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .testimonial-card::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      width: 44px;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+      border-color: #d8d5db;
+    }
+
+    .testimonial-brand {
+      margin: 0 0 0.85rem;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .testimonial-brand img {
+      display: block;
+      max-height: 38px;
+      width: auto;
+      max-width: min(100%, 168px);
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .testimonial-quote {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #1d1d1d;
+    }
+
+    .testimonial-quote p {
+      margin: 0 0 0.7rem;
+    }
+
+    .testimonial-quote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .testimonial-meta {
+      margin-top: 0.95rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .btn-signup,
+    .btn-outline {
+      padding: 0.72rem 1.35rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .btn-outline {
+      border: 2px solid var(--text);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-outline:hover {
+      background: #f5f5f5;
+      transform: translateY(-1px);
+    }
+
+    .link-learn {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .market-flow {
+      padding: clamp(2.5rem, 5vw, 3.75rem) 0 clamp(2.75rem, 6vw, 4.25rem);
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+
+    .flow-shell {
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    .flow-head {
+      margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+      text-align: center;
+    }
+
+    .flow-head h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      letter-spacing: -0.02em;
+    }
+
+    .flow-timeline {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .flow-step-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 0 1.35rem;
+      padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+      position: relative;
+    }
+
+    .flow-step-row:last-child {
+      padding-bottom: 0;
+    }
+
+    .flow-num-wrap {
+      display: flex;
+      justify-content: center;
+      padding-top: 0.2rem;
+    }
+
+    .flow-step-row:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: 52px;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+      background: var(--line);
+      z-index: 0;
+    }
+
+    .flow-num {
+      position: relative;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.08rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 3px var(--bg);
+    }
+
+    .flow-panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 1.15rem 1.2rem 1.25rem;
+    }
+
+    .flow-panel h3 {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+    }
+
+    .flow-panel > p {
+      margin: 0.55rem 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .flow-list {
+      margin: 0.85rem 0 0;
+      padding: 0;
+      padding-left: 1.2rem;
+      list-style: disc;
+      color: #333;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .flow-list li {
+      margin: 0 0 0.35rem;
+      padding-left: 0.15rem;
+    }
+
+    .flow-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .flow-cta {
+      margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+      display: flex;
+      justify-content: center;
+    }
+
+    .enquiry {
+      padding: 0.6rem 0 4.6rem;
+    }
+
+    .enquiry-head {
+      text-align: center;
+      margin-bottom: 1.35rem;
+    }
+
+    .enquiry-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
+      color: #121a2b;
+    }
+
+    .enquiry-head p {
+      margin: 0.55rem 0 0;
+      color: #616a7d;
+      font-size: 1.02rem;
+    }
+
+    .enquiry-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 0.36fr 1fr;
+      overflow: hidden;
+    }
+
+    .enquiry-left {
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.95rem;
+      min-height: 315px;
+      padding: 1.4rem;
+      text-align: center;
+    }
+
+    .enquiry-left img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .enquiry-left strong {
+      font-size: 1.95rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .enquiry-left span {
+      opacity: 0.95;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .enquiry-form {
+      padding: 1.45rem 1.55rem;
+      display: grid;
+      gap: 0.8rem;
+      align-content: start;
+    }
+
+    .enquiry-form input,
+    .enquiry-form textarea {
+      width: 100%;
+      border: 1px solid #d8dbe3;
+      border-radius: 5px;
+      padding: 0.7rem 0.75rem;
+      font: inherit;
+      font-size: 0.95rem;
+      background: #fafbfc;
+      color: #1f2a3d;
+    }
+
+    .enquiry-form textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    .enquiry-form button {
+      justify-self: end;
+      border: none;
+      border-radius: 5px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.6rem 1.05rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .enquiry-form button:hover {
+      background: var(--primary-hover);
+    }
+
+    .site-footer {
+      padding: 1.5rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        width: min(100% - 1.5rem, var(--maxw));
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid--browse {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid--browse .feature-copy {
+        justify-self: stretch;
+        max-width: none;
+      }
+
+      .feature-mock {
+        max-width: 420px;
+        margin-inline: auto;
+      }
+
+      .filter-mock {
+        margin-inline: auto;
+      }
+
+      .hero {
+        min-height: min(48vh, 400px);
+        padding: clamp(2rem, 6vw, 3.25rem) 0 clamp(1.5rem, 4vw, 2.25rem);
+      }
+
+      .enquiry-card {
+        grid-template-columns: 1fr;
+      }
+
+      .enquiry-left {
+        min-height: 200px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero h1 {
+        min-height: 4em;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .partner-track {
+        animation: none;
+      }
+
+      .typing-caret {
+        animation: none;
+      }
+
+      * {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="#" aria-label="Resource Marketplace home">
+        <img src="main-logo.png" alt="Resource Marketplace" width="200" height="40">
+      </a>
+      <div class="header-actions">
+        <a class="link-login" href="#">Log In</a>
+        <a class="btn-signup" href="#">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1 aria-live="polite">
+        <span class="hero-lead">A marketplace for businesses.</span>
+        <span class="typing-shell">
+          <span class="typing-placeholder"> Turn your waste into opportunity. Clear yards, purchase discounted stock, avoid disposal costs.</span>
+          <span class="typing-overlay"><span class="typing-text" id="typingText"></span><span class="typing-caret" id="typingCaret" aria-hidden="true"></span></span>
+        </span>
+      </h1>
+      <div class="hero-cta">
+        <a class="btn-cta" href="#">View Active Listings</a>
+      </div>
+    </section>
+
+    <section class="partners container" aria-label="Partner brands">
+      <p class="partners-label">Partnering with large industrial brands</p>
+      <div class="partner-viewport">
+        <div class="partner-track" id="partnerTrack">
+          <img class="partner-logo" src="enviro-logo.png" alt="Enviro logo">
+          <img class="partner-logo" src="bingo-logo.png" alt="Bingo logo">
+          <img class="partner-logo" src="downer-logo.svg" alt="Downer logo">
+          <img class="partner-logo" src="osmoflo-logo.png" alt="Osmoflo logo">
+          <img class="partner-logo" src="enviro-logo.png" alt="Enviro logo">
+          <img class="partner-logo" src="bingo-logo.png" alt="Bingo logo">
+          <img class="partner-logo" src="downer-logo.svg" alt="Downer logo">
+          <img class="partner-logo" src="osmoflo-logo.png" alt="Osmoflo logo">
+          <img class="partner-logo" src="enviro-logo.png" alt="" aria-hidden="true">
+          <img class="partner-logo" src="bingo-logo.png" alt="" aria-hidden="true">
+          <img class="partner-logo" src="downer-logo.svg" alt="" aria-hidden="true">
+          <img class="partner-logo" src="osmoflo-logo.png" alt="" aria-hidden="true">
+          <img class="partner-logo" src="enviro-logo.png" alt="" aria-hidden="true">
+          <img class="partner-logo" src="bingo-logo.png" alt="" aria-hidden="true">
+          <img class="partner-logo" src="downer-logo.svg" alt="" aria-hidden="true">
+          <img class="partner-logo" src="osmoflo-logo.png" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-spotlight" aria-labelledby="feature-listings-title">
+      <div class="container feature-spotlight-inner">
+        <div class="feature-grid">
+          <div class="feature-copy">
+            <h2 id="feature-listings-title">Create detailed listings</h2>
+            <p>
+              Capture the fields industrial buyers expect: quantities, locations, specs, dates, and compliance notes — plus files when you need them.
+            </p>
+            <ul class="feature-points">
+              <li>Structured item details and dimensions in a clear layout</li>
+              <li>Description, damage, and contamination notes where they belong</li>
+              <li>Attachments for licences, SDS, photos, and other documents</li>
+            </ul>
+          </div>
+          <div class="feature-mock" aria-hidden="true">
+            <div class="mock-title">Item details</div>
+            <div class="mock-field">
+              <span class="mock-label">Title <span class="req">*</span></span>
+              <span class="mock-input"></span>
+            </div>
+            <div class="mock-row2">
+              <div class="mock-field">
+                <span class="mock-label">Quantity</span>
+                <span class="mock-input"></span>
+              </div>
+              <div class="mock-field">
+                <span class="mock-label">Location</span>
+                <span class="mock-input"></span>
+              </div>
+            </div>
+            <div class="mock-row2">
+              <div class="mock-field">
+                <span class="mock-label">Category <span class="req">*</span></span>
+                <span class="mock-input"></span>
+              </div>
+              <div class="mock-field">
+                <span class="mock-label">Manufacturer</span>
+                <span class="mock-input"></span>
+              </div>
+            </div>
+            <div class="mock-field">
+              <span class="mock-label">Package size (ea) <span class="req">*</span></span>
+              <div class="mock-row-split">
+                <span class="mock-input"></span>
+                <span class="mock-pill">Unit</span>
+              </div>
+            </div>
+            <div class="mock-row3">
+              <div class="mock-field">
+                <span class="mock-label">L <span class="req">*</span></span>
+                <span class="mock-input"></span>
+              </div>
+              <div class="mock-field">
+                <span class="mock-label">W <span class="req">*</span></span>
+                <span class="mock-input"></span>
+              </div>
+              <div class="mock-field">
+                <span class="mock-label">H <span class="req">*</span></span>
+                <span class="mock-input"></span>
+              </div>
+            </div>
+            <div class="mock-field">
+              <span class="mock-label">Description <span class="req">*</span></span>
+              <span class="mock-textarea"></span>
+            </div>
+            <div class="mock-attach">
+              <span>Attachments</span>
+              <span>+ Add document</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-spotlight" aria-labelledby="feature-browse-title">
+      <div class="container feature-spotlight-inner">
+        <div class="feature-grid feature-grid--browse">
+          <div class="feature-mock filter-mock" aria-hidden="true">
+            <div class="mock-title">Filters</div>
+            <div class="mock-section-title">Search</div>
+            <span class="mock-input mock-input--sm"></span>
+            <div class="mock-section-title">Category</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Chemicals</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Equipment</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Materials</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Organics</div>
+            <div class="mock-section-title">State</div>
+            <div class="mock-state-grid">
+              <div class="mock-check"><span class="mock-check-box"></span> NSW</div>
+              <div class="mock-check"><span class="mock-check-box"></span> WA</div>
+              <div class="mock-check"><span class="mock-check-box"></span> VIC</div>
+              <div class="mock-check"><span class="mock-check-box"></span> TAS</div>
+              <div class="mock-check"><span class="mock-check-box"></span> QLD</div>
+              <div class="mock-check"><span class="mock-check-box"></span> NT</div>
+              <div class="mock-check"><span class="mock-check-box"></span> SA</div>
+              <div class="mock-check"><span class="mock-check-box"></span> ACT</div>
+            </div>
+            <div class="mock-range-label">Price (AUD)</div>
+            <div class="mock-range-row">
+              <span class="mock-currency">$</span>
+              <span class="mock-range-min"></span>
+              <span class="mock-range-sep">-</span>
+              <span class="mock-range-max"></span>
+            </div>
+            <div class="mock-range-label">Min volume available</div>
+            <div class="mock-range-row">
+              <span class="mock-range-min"></span>
+              <span class="mock-range-sep">-</span>
+              <span class="mock-range-max"></span>
+            </div>
+            <hr class="mock-hr">
+            <div class="mock-micro">Shipping</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Pickup available</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Vehicle loading available</div>
+            <hr class="mock-hr">
+            <div class="mock-micro">Attachments</div>
+            <div class="mock-doc-sub">Document types</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Safety Data Sheet</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Brochure / Data Sheet</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Drawing</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Manual</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Certificate / Report</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Sample Test Result</div>
+          </div>
+          <div class="feature-copy">
+            <h2 id="feature-browse-title">Easily find what you're looking for</h2>
+            <p>
+              Slice listings by category, state, price, and volume — then narrow further with shipping options and the document types you need on file.
+            </p>
+            <ul class="feature-points">
+              <li>Search plus structured filters built for industrial stock</li>
+              <li>State coverage and practical shipping flags at a glance</li>
+              <li>Attachment filters for SDS, drawings, certificates, and more</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials container" aria-label="Testimonials">
+      <h2>Testimonials</h2>
+      <p class="testimonials-sub">See what our customers have to say</p>
+      <div class="testimonials-grid">
+        <article class="testimonial-card">
+          <div class="testimonial-brand">
+            <img src="bingo-logo.png" width="160" height="38" alt="Bingo Industries">
+          </div>
+          <div class="testimonial-quote">
+            <p>Resource Marketplace found a new home for approximately 10.5 tonnes of oversupplied chemical that would&apos;ve otherwise been hoarded onsite for months or even years and finally would&apos;ve become waste.</p>
+            <p>Instead, RM found a new home for the chemical, where we traded it for cash, and saved ourselves disposal costs and diverted it from landfill!</p>
+            <p>The experience was great, everything was well organised and professional.</p>
+          </div>
+          <p class="testimonial-meta">Mamdouh Elomar<br>Bingo Industries, NSW</p>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-brand">
+            <img src="osmoflo-logo.png" width="160" height="38" alt="Osmoflo">
+          </div>
+          <div class="testimonial-quote">
+            <p>Osmoflo operation procured IBCs of ACH to be utilised in our water treatment plants. The access to items that otherwise would be unused and potentially disposed of is a great initiative and aligns with our sustainable focused business.</p>
+            <p>The pricing is reflective of the ability to utilise items that may be sitting in stock indefinitely.</p>
+            <p>The process to order, transport and deliver in a timely manner was seamless and we will look to work with Resource Marketplace in the future.</p>
+          </div>
+          <p class="testimonial-meta">Todd Billing<br>Osmoflo, SA</p>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-brand">
+            <img src="downer-logo.svg" width="160" height="38" alt="Downer">
+          </div>
+          <div class="testimonial-quote">
+            <p>I was thoroughly impressed with how easy and efficient Resource Marketplace worked to turnaround a sale of redundant equipment!</p>
+            <p>We sold RM a set of valves and they worked with us very patiently through the process of paperwork, negotiation, and physical offloading of the goods.</p>
+            <p>RM negotiated very fairly on the items that would have otherwise found themselves in landfill - a great step towards positively impacting the environment in an industry where it is quite difficult to do so!</p>
+          </div>
+          <p class="testimonial-meta">Ray Gy<br>Downer, NSW</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="market-flow" aria-label="How Resource Marketplace works end-to-end">
+      <div class="container flow-shell">
+        <header class="flow-head">
+          <h2>How it works</h2>
+        </header>
+
+        <ol class="flow-timeline">
+          <li class="flow-step-row">
+            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">1</span></div>
+            <article class="flow-panel">
+              <h3>List and browse</h3>
+              <p>Businesses list surplus inventory while buyers browse available stock by category, volume and location.</p>
+              <ul class="flow-list">
+                <li>Sellers clear space and expose stock quickly</li>
+                <li>Buyers access lower-cost alternatives in one place</li>
+                <li>Both sides work within one verified B2B marketplace</li>
+              </ul>
+            </article>
+          </li>
+          <li class="flow-step-row">
+            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">2</span></div>
+            <article class="flow-panel">
+              <h3>Transact and coordinate delivery</h3>
+              <p>Matched businesses progress through a structured transaction path with clear handoff and delivery coordination.</p>
+              <ul class="flow-list">
+                <li>Less back-and-forth between teams</li>
+                <li>Clear commercial process from enquiry to fulfilment</li>
+                <li>Reduced procurement and disposal friction</li>
+              </ul>
+            </article>
+          </li>
+          <li class="flow-step-row">
+            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">3</span></div>
+            <article class="flow-panel">
+              <h3>Capture the outcome</h3>
+              <p>Both sides gain measurable value through lower costs, recovered revenue and improved circular outcomes.</p>
+              <ul class="flow-list">
+                <li>Sellers reduce disposal costs and free up yard space</li>
+                <li>Buyers secure lower pricing on usable materials</li>
+                <li>Both reduce landfill and improve sustainability performance</li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+
+        <div class="flow-cta">
+          <a class="btn-signup" href="#">Sign up</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="enquiry container" aria-label="Enquiry form">
+      <div class="enquiry-head">
+        <h2>We're here to help</h2>
+        <p>Help getting started, questions about items, suggestions or features you want. We want to hear from you!</p>
+      </div>
+      <div class="enquiry-card">
+        <div class="enquiry-left">
+          <img src="main-logo.png" alt="" aria-hidden="true">
+          <strong>1800 407 519</strong>
+          <span>9am-5pm Weekdays</span>
+        </div>
+        <form class="enquiry-form" action="#" method="post">
+          <input type="text" name="name" placeholder="Name" aria-label="Name">
+          <input type="email" name="email" placeholder="Email" aria-label="Email">
+          <input type="tel" name="phone" placeholder="Phone Number (Optional)" aria-label="Phone Number">
+          <textarea name="message" placeholder="How can we help?" aria-label="How can we help?"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span id="year"></span> Resource Marketplace
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const yearEl = document.getElementById("year");
+      const typingText = document.getElementById("typingText");
+      const typingCaret = document.getElementById("typingCaret");
+      const heroTyped =
+        " Turn your waste into opportunity. Clear yards, purchase discounted stock, avoid disposal costs.";
+
+      yearEl.textContent = new Date().getFullYear();
+
+      let i = 0;
+      function type() {
+        if (!typingText) return;
+        if (i < heroTyped.length) {
+          i += 1;
+          typingText.textContent = heroTyped.slice(0, i);
+          setTimeout(type, 20);
+          return;
+        }
+        if (typingCaret) typingCaret.style.display = "none";
+      }
+      type();
+
+    })();
+  </script>
+</body>
+</html>
