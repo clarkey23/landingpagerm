@@ -7,16 +7,41 @@
     • FAQ_DATA       — FAQ questions and answers
     • HTML sections  — homepage layout below #view-home
   Routing: #/ | #/industry/{slug} | #/role/{slug} | #/enquiry
+
+  DEV HANDOFF — placeholders to wire up before launch:
+    • CTA links with href="#"  → real app routes:
+        - "Sign up" / "Register free"      (header, How-it-works CTA, footer, landing CTAs)
+        - "Log in"                         (header, footer)
+        - "View Active Listings" / "Browse listings"  (hero + landing CTAs)
+    • Enquiry form: <form class="enquiry-form" action="#" method="post">  → real endpoint + validation + success state
+    • Footer email hello@resourcemarketplace.com.au  → confirm real inbox
+    • Footer "Terms & Conditions" / "Privacy Policy" href="#"  → real pages (also referenced in FAQ)
+    • Update og:url / og:image / canonical below if the domain or share image changes
 -->
 
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Resource Marketplace</title>
-  <meta name="description" content="A marketplace for industry. Turn waste into opportunity.">
+  <title>Resource Marketplace | Buy &amp; sell industrial surplus in Australia</title>
+  <meta name="description" content="Resource Marketplace is an Australian B2B marketplace for surplus industrial materials, equipment and chemicals. List free, buy verified stock for less, and keep usable material out of landfill.">
+  <link rel="canonical" href="https://www.resourcemarketplace.com.au/">
   <link rel="icon" href="RM_Icon_TRNS_Large.png" type="image/png">
   <link rel="apple-touch-icon" href="RM_Icon_TRNS_Large.png">
+
+  <!-- Open Graph (LinkedIn, Facebook, Slack, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Resource Marketplace">
+  <meta property="og:title" content="Resource Marketplace | Buy &amp; sell industrial surplus in Australia">
+  <meta property="og:description" content="An Australian B2B marketplace for surplus industrial materials, equipment and chemicals. List free, buy verified stock for less, and keep usable material out of landfill.">
+  <meta property="og:url" content="https://www.resourcemarketplace.com.au/">
+  <meta property="og:image" content="https://www.resourcemarketplace.com.au/main-logo.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Resource Marketplace | Buy &amp; sell industrial surplus in Australia">
+  <meta name="twitter:description" content="An Australian B2B marketplace for surplus industrial materials, equipment and chemicals. List free, buy verified stock for less, and keep usable material out of landfill.">
+  <meta name="twitter:image" content="https://www.resourcemarketplace.com.au/main-logo.png">
   <style>
     /* Layout: tokens, base, header, hero, video, partners, solutions hub, FAQ */
     /* Pages: use-case landings, feature spotlights, testimonials, flow, enquiry */
@@ -129,8 +154,8 @@
 
     .hero {
       text-align: center;
-      min-height: min(52vh, 440px);
-      padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(1.75rem, 4vw, 2.75rem);
+      min-height: clamp(340px, 64svh, 560px);
+      padding: clamp(2rem, 5vw, 3.25rem) 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -327,6 +352,79 @@
       to { transform: translateX(-50%); }
     }
 
+    .impact {
+      padding: clamp(2.5rem, 5vw, 3.75rem) 0;
+      border-top: 1px solid var(--line);
+      background: var(--card-soft);
+    }
+
+    .impact-head {
+      text-align: center;
+      max-width: 44rem;
+      margin: 0 auto clamp(1.85rem, 4vw, 2.5rem);
+    }
+
+    .impact-head h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      letter-spacing: -0.02em;
+    }
+
+    .impact-head p {
+      margin: 0.7rem auto 0;
+      max-width: 40rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
+    .impact-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(1.25rem, 3vw, 2rem);
+      max-width: 960px;
+      margin-inline: auto;
+    }
+
+    .impact-stat {
+      padding-top: 0.85rem;
+      border-top: 2px solid var(--primary);
+    }
+
+    .impact-stat-value {
+      display: block;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .impact-stat-label {
+      display: block;
+      margin-top: 0.45rem;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .impact-stat-source {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .impact-note {
+      margin: clamp(1.85rem, 4vw, 2.5rem) auto 0;
+      max-width: 44rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
     .solutions {
       padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2.75rem, 5vw, 4rem);
       border-top: 1px solid var(--line);
@@ -343,12 +441,12 @@
       margin-top: clamp(2rem, 4vw, 2.5rem);
     }
 
-    .solutions-group-head {
-      margin-bottom: 1.1rem;
+    .solutions-group + .solutions-group {
+      margin-top: clamp(2.25rem, 4vw, 3rem);
     }
 
     .solutions-group-head h3 {
-      margin: 0;
+      margin: 0 0 0.35rem;
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.14em;
@@ -360,103 +458,61 @@
       margin-top: 1.8rem;
     }
 
-    .solutions-grid {
+    .dir-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.65rem;
+      column-gap: clamp(1.5rem, 4vw, 3rem);
     }
 
-    .solution-card {
-      display: block;
-      padding: 0.95rem 1rem 0.95rem 0.85rem;
-      border: 1px solid var(--line);
-      border-left: 3px solid var(--primary);
-      border-radius: 10px;
-      background: var(--card);
-      transition: background 0.15s ease, border-color 0.15s ease;
+    .dir-grid--roles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .solution-card:hover {
-      background: var(--card-soft);
-      border-color: #d8d5db;
-      border-left-color: var(--primary-hover);
+    .dir-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.95rem 0;
+      border-top: 1px solid var(--line);
     }
 
-    .solution-card:focus-visible {
+    .dir-link:focus-visible {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
     }
 
-    .solution-card-title {
-      display: block;
-      font-size: 1.12rem;
+    .dir-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.02rem;
       font-weight: 700;
-      letter-spacing: -0.015em;
-      line-height: 1.3;
+      letter-spacing: -0.01em;
+      transition: color 0.15s ease;
     }
 
-    .solution-card-desc {
-      display: block;
-      margin-top: 0.35rem;
-      font-size: 0.94rem;
+    .dir-name::after {
+      content: "\2192";
+      font-weight: 600;
+      color: var(--primary);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .dir-link:hover .dir-name {
+      color: var(--primary);
+    }
+
+    .dir-link:hover .dir-name::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .dir-teaser {
+      font-size: 0.92rem;
       color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .solution-role-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--card);
-    }
-
-    .solution-role-list li {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .solution-role-list li:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
-
-    .solution-role-list li:nth-child(odd) {
-      border-right: 1px solid var(--line);
-    }
-
-    .solution-role-link {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      min-height: 100%;
-      padding: 0.9rem 1rem;
-      transition: background 0.15s ease;
-    }
-
-    .solution-role-link:hover {
-      background: var(--card-soft);
-    }
-
-    .solution-role-link:focus-visible {
-      outline: 2px solid var(--primary);
-      outline-offset: -2px;
-    }
-
-    .solution-role-link strong {
-      font-size: 1.12rem;
-      font-weight: 700;
-      letter-spacing: -0.015em;
-      line-height: 1.3;
-    }
-
-    .solution-role-link span {
-      font-size: 0.94rem;
-      color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     #view-home[hidden],
@@ -467,7 +523,7 @@
     .uc-landing-hero {
       padding: clamp(2.75rem, 6vw, 4.25rem) 0 clamp(1.75rem, 4vw, 2.5rem);
       text-align: center;
-      background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 7%, var(--bg) 93%) 0%, var(--bg) 100%);
+      background: var(--card-soft);
       border-bottom: 1px solid var(--line);
     }
 
@@ -625,41 +681,35 @@
     .uc-steps-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
+      gap: clamp(1.25rem, 3vw, 2rem);
     }
 
     .uc-step-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 1.15rem 1.1rem;
+      padding-top: 0.85rem;
+      border-top: 2px solid var(--primary);
     }
 
-    .uc-step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.65rem;
-      height: 1.65rem;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.78rem;
+    .uc-step-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.68rem;
       font-weight: 800;
-      margin-bottom: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     .uc-step-card h3 {
       margin: 0;
-      font-size: 0.95rem;
+      font-size: 1rem;
       letter-spacing: -0.01em;
     }
 
     .uc-step-card p {
       margin: 0.35rem 0 0;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--muted);
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     .uc-proof-section {
@@ -1174,13 +1224,8 @@
       border-top: 1px solid var(--line);
     }
 
-    .flow-shell {
-      max-width: 720px;
-      margin-inline: auto;
-    }
-
     .flow-head {
-      margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: clamp(2rem, 4vw, 2.75rem);
       text-align: center;
     }
 
@@ -1190,102 +1235,56 @@
       letter-spacing: -0.02em;
     }
 
-    .flow-timeline {
+    .flow-steps {
       list-style: none;
-      margin: 0;
+      margin: 0 auto;
       padding: 0;
-    }
-
-    .flow-step-row {
+      max-width: 960px;
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
-      gap: 0 1.35rem;
-      padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
-      position: relative;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 2.75rem);
     }
 
-    .flow-step-row:last-child {
-      padding-bottom: 0;
+    .flow-step {
+      padding-top: 0.95rem;
+      border-top: 2px solid var(--primary);
     }
 
-    .flow-num-wrap {
-      display: flex;
-      justify-content: center;
-      padding-top: 0.2rem;
-    }
-
-    .flow-step-row:not(:last-child)::before {
-      content: "";
-      position: absolute;
-      left: 25px;
-      top: 52px;
-      bottom: 0;
-      width: 1px;
-      transform: translateX(-50%);
-      background: var(--line);
-      z-index: 0;
-    }
-
-    .flow-num {
-      position: relative;
-      z-index: 1;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
+    .flow-step-label {
+      display: block;
+      margin-bottom: 0.55rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      font-size: 1.08rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 3px var(--bg);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
-    .flow-panel {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--card);
-      padding: 1.15rem 1.2rem 1.25rem;
-    }
-
-    .flow-panel h3 {
+    .flow-step h3 {
       margin: 0;
       font-size: 1.12rem;
       line-height: 1.3;
       letter-spacing: -0.015em;
     }
 
-    .flow-panel > p {
-      margin: 0.55rem 0 0;
+    .flow-step p {
+      margin: 0.5rem 0 0;
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.96rem;
       line-height: 1.55;
     }
 
-    .flow-list {
-      margin: 0.85rem 0 0;
-      padding: 0;
-      padding-left: 1.2rem;
-      list-style: disc;
-      color: #333;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .flow-list li {
-      margin: 0 0 0.35rem;
-      padding-left: 0.15rem;
-    }
-
-    .flow-list li:last-child {
-      margin-bottom: 0;
-    }
-
     .flow-cta {
-      margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+      margin-top: clamp(2rem, 4vw, 2.75rem);
       display: flex;
       justify-content: center;
+    }
+
+    @media (max-width: 720px) {
+      .flow-steps {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
     }
 
     .enquiry {
@@ -1516,14 +1515,128 @@
     }
 
     .site-footer {
-      padding: 1.5rem 0;
-      text-align: center;
-      font-size: 0.85rem;
+      border-top: 1px solid var(--line);
+      background: var(--card);
+    }
+
+    .site-footer-inner {
+      padding: clamp(2.5rem, 4vw, 3.25rem) 0 clamp(1.75rem, 3vw, 2.25rem);
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1.2fr 0.8fr;
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .footer-brand-logo {
+      display: inline-block;
+    }
+
+    .footer-brand-logo img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .footer-tagline {
+      margin: 0.95rem 0 0;
+      max-width: 30ch;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .footer-abn {
+      margin: 0.9rem 0 0;
+      font-size: 0.78rem;
       color: var(--muted);
     }
 
+    .footer-col h4 {
+      margin: 0 0 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-links,
+    .footer-contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-contact {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .footer-links a,
+    .footer-contact a {
+      color: var(--text);
+    }
+
+    .footer-links a:hover,
+    .footer-contact a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--text);
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding: 1.1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem 1.25rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
     @media (max-width: 980px) {
-      .solutions-grid {
+      .dir-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -1553,11 +1666,6 @@
         margin-inline: auto;
       }
 
-      .hero {
-        min-height: min(48vh, 400px);
-        padding: clamp(2rem, 6vw, 3.25rem) 0 clamp(1.5rem, 4vw, 2.25rem);
-      }
-
       .enquiry-card {
         grid-template-columns: 1fr;
       }
@@ -1579,27 +1687,32 @@
     }
 
     @media (max-width: 720px) {
-      .solutions-grid,
-      .solution-role-list {
+      .dir-grid,
+      .dir-grid--roles {
         grid-template-columns: 1fr;
       }
 
-      .solution-role-list li:nth-child(odd) {
-        border-right: none;
-      }
-
-      .solution-role-list li:nth-last-child(-n+2) {
-        border-bottom: 1px solid var(--line);
-      }
-
-      .solution-role-list li:last-child {
-        border-bottom: none;
+      .impact-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .testimonials-grid {
         grid-template-columns: 1fr;
       }
 
+      .site-footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .site-footer-inner {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1632,7 +1745,7 @@
       <h1>
         <span class="hero-headline">
           <span class="hero-lead">A marketplace for industry.</span>
-          <span class="hero-sub"> Turn your waste into opportunity. Clear yards, purchase discounted stock, avoid disposal costs.</span>
+          <span class="hero-sub"> Turn your waste into opportunity. Clear yards, purchase discounted stock, and avoid disposal costs.</span>
         </span>
       </h1>
       <div class="hero-cta">
@@ -1838,55 +1951,64 @@
       </div>
     </section>
 
-    <section class="market-flow" aria-label="How Resource Marketplace works end-to-end">
-      <div class="container flow-shell">
-        <header class="flow-head">
-          <h2>How it works</h2>
-        </header>
+    <section class="market-flow container" id="how-it-works" aria-label="How Resource Marketplace works">
+      <header class="flow-head">
+        <h2>How it works</h2>
+      </header>
 
-        <ol class="flow-timeline">
-          <li class="flow-step-row">
-            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">1</span></div>
-            <article class="flow-panel">
-              <h3>List and browse</h3>
-              <p>Businesses list surplus inventory while buyers browse available stock by category, volume and location.</p>
-              <ul class="flow-list">
-                <li>Sellers clear space and expose stock quickly</li>
-                <li>Buyers access lower-cost alternatives in one place</li>
-                <li>Both sides work within one verified B2B marketplace</li>
-              </ul>
-            </article>
-          </li>
-          <li class="flow-step-row">
-            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">2</span></div>
-            <article class="flow-panel">
-              <h3>Transact and coordinate delivery</h3>
-              <p>Matched businesses progress through a structured transaction path with clear handoff and delivery coordination.</p>
-              <ul class="flow-list">
-                <li>Less back-and-forth between teams</li>
-                <li>Clear commercial process from enquiry to fulfilment</li>
-                <li>Reduced procurement and disposal friction</li>
-              </ul>
-            </article>
-          </li>
-          <li class="flow-step-row">
-            <div class="flow-num-wrap" aria-hidden="true"><span class="flow-num">3</span></div>
-            <article class="flow-panel">
-              <h3>Capture the outcome</h3>
-              <p>Both sides gain measurable value through lower costs, recovered revenue and improved circular outcomes.</p>
-              <ul class="flow-list">
-                <li>Sellers reduce disposal costs and free up yard space</li>
-                <li>Buyers secure lower pricing on usable materials</li>
-                <li>Both reduce landfill and improve sustainability performance</li>
-              </ul>
-            </article>
-          </li>
-        </ol>
+      <ol class="flow-steps">
+        <li class="flow-step">
+          <span class="flow-step-label">Step 01</span>
+          <h3>List or browse</h3>
+          <p>Sellers post surplus stock with photos, specs and location. Buyers search by category, volume and state.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-step-label">Step 02</span>
+          <h3>Sort the deal</h3>
+          <p>Enquire, negotiate and confirm freight with the other business directly. Pay securely through Stripe.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-step-label">Step 03</span>
+          <h3>Move the stock</h3>
+          <p>Arrange pickup or delivery. Sellers clear space and recover cash, buyers get what they need for less.</p>
+        </li>
+      </ol>
 
-        <div class="flow-cta">
-          <a class="btn-signup" href="#">Sign up</a>
+      <div class="flow-cta">
+        <a class="btn-signup" href="#">Sign up</a>
+      </div>
+    </section>
+
+    <section class="impact container" aria-labelledby="impact-title">
+      <header class="impact-head">
+        <h2 id="impact-title">Good business. Less landfill.</h2>
+        <p>Every deal keeps usable materials, equipment and chemicals in productive use instead of the tip. It's a cheaper way to buy, a smarter way to clear a yard, and a real step toward a circular economy.</p>
+      </header>
+
+      <div class="impact-stats">
+        <div class="impact-stat">
+          <span class="impact-stat-value">4.6%</span>
+          <span class="impact-stat-label">Australia's circularity rate today</span>
+          <span class="impact-stat-source">CSIRO</span>
+        </div>
+        <div class="impact-stat">
+          <span class="impact-stat-value">~29Mt</span>
+          <span class="impact-stat-label">Construction &amp; demolition waste a year</span>
+          <span class="impact-stat-source">ABS</span>
+        </div>
+        <div class="impact-stat">
+          <span class="impact-stat-value">$85&ndash;219</span>
+          <span class="impact-stat-label">Cost to send a tonne to landfill</span>
+          <span class="impact-stat-source">Per tonne, by state</span>
+        </div>
+        <div class="impact-stat">
+          <span class="impact-stat-value">2035</span>
+          <span class="impact-stat-label">National target to double circularity</span>
+          <span class="impact-stat-source">Circular Economy Framework</span>
         </div>
       </div>
+
+      <p class="impact-note">We're working with researchers at the University of Sydney to measure avoided landfill and emissions from every transaction &mdash; so buyers and sellers can back up their Scope 3 and ESG reporting with real numbers.</p>
     </section>
 
     <section class="solutions container" aria-labelledby="solutions-title">
@@ -1894,7 +2016,7 @@
       <div id="solutions-nav"></div>
     </section>
 
-    <section class="faq container" aria-labelledby="faq-title">
+    <section class="faq container" id="faq" aria-labelledby="faq-title">
       <h2 id="faq-title">Frequently Asked Questions</h2>
       <p class="faq-sub">Everything you need to know about buying and selling on Resource Marketplace.</p>
       <div class="faq-groups" id="faq-groups"></div>
@@ -1926,8 +2048,54 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <span id="year"></span> Resource Marketplace
+    <div class="container site-footer-inner">
+      <div class="footer-brand">
+        <a href="#/" class="footer-brand-logo" aria-label="Resource Marketplace home">
+          <img src="main-logo.png" alt="Resource Marketplace" width="190" height="38">
+        </a>
+        <p class="footer-tagline">A B2B marketplace for industrial surplus. Turn waste into opportunity and keep usable materials out of landfill.</p>
+        <p class="footer-abn">Resource Marketplace Pty Ltd &middot; ABN 71 673 808 332</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Explore">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="#">Browse listings</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Sign up</a></li>
+          <li><a href="#">Log in</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-contact">
+          <li><a href="tel:1800407519">1800 407 519</a></li>
+          <li><a href="mailto:hello@resourcemarketplace.com.au">hello@resourcemarketplace.com.au</a></li>
+          <li>175 Regent Street,<br>Redfern NSW 2016</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/resource-marketplace" target="_blank" rel="noopener" aria-label="Resource Marketplace on LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.65 4.78 6.1V21H19v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H11z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@ResourceMarketplace" target="_blank" rel="noopener" aria-label="Resource Marketplace on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.5v-7l6.3 3.5z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; <span id="year"></span> Resource Marketplace Pty Ltd</span>
+      <div class="footer-bottom-links">
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+      </div>
     </div>
   </footer>
 
@@ -1954,7 +2122,7 @@
   // Use-case landing page content (industry + role ad destinations)
   // Routes: #/ | #/industry/{slug} | #/role/{slug} | #/enquiry
   // ---------------------------------------------------------------------------
-  const USE_CASE_DATA = {"shared":{"trust":[{"value":"Free","label":"No cost to list"},{"value":"Escrow","label":"Payment on delivery"},{"value":"B2B","label":"Verified businesses only"}]},"industries":[{"slug":"construction","name":"Construction","cardTeaser":"We can help clear your sites and get in required goods cheaply.","headline":"Turn site surplus into cash, not skip fees","lead":"Leftover steel, formwork and fittings cost money to store and dump. List them free on Resource Marketplace and sell to contractors who need them now.","benefits":[{"title":"List for nothing","text":"Posting is free. You only pay commission when something sells."},{"title":"Buyers already looking","text":"Hundreds of industrial businesses browse listings every week by category, state and volume."},{"title":"Paid through escrow","text":"Money is held until the buyer confirms delivery. No chasing invoices."}],"materials":["Formwork & scaffolding","Steel & fittings","Packaging","Plant & tools"],"problemHeading":"When projects finish, stock stays","problems":["Laydown areas full of materials from the last job","Specs changed on the next project and stock no longer fits","Skip and landfill costs hitting job margins","Client or ESG reports asking where surplus went"],"steps":[{"title":"Post your surplus","text":"Free listing with quantities, location, photos and specs."},{"title":"Buyers enquire","text":"Contractors and industrial businesses search by what they need."},{"title":"Arrange delivery","text":"Agree pickup or drop-off with a verified business on the platform."},{"title":"Get paid on delivery","text":"Funds released from escrow once the buyer confirms receipt."}],"proof":{"quote":"RM found a new home for 10.5 tonnes of oversupplied chemical — traded for cash and diverted from landfill.","author":"Mamdouh Elomar","company":"Bingo Industries"},"cta":"Register free","ctaSub":"Start listing project surplus"},{"slug":"demolition","name":"Demolition","cardTeaser":"We can help you sell recovered materials and equipment.","headline":"Get paid for what comes off the building","lead":"Metals, fixtures and plant stripped from site often go to waste because finding a buyer takes too long. List free and reach businesses outside demolition who will pay for it.","benefits":[{"title":"Free to list","text":"No upfront cost. Commission only when you sell."},{"title":"Better diversion numbers","text":"Usable material goes to verified buyers instead of the waste stream."},{"title":"Documented sales","text":"Attachments and platform records support your reporting."}],"materials":["Recovered metals","Fixtures","Plant & equipment","Building materials"],"problemHeading":"Recovery without a buyer is just waste","problems":["Good material mixed into waste because there is no ready buyer","Plant idle between contracts, costing yard space","Diversion targets hard to hit without a reliable outlet","No time to run informal sales while jobs are moving"],"steps":[{"title":"List what you recovered","text":"Weights, specs, photos — whatever helps buyers commit."},{"title":"Reach other industries","text":"Construction, manufacturing and recycling businesses browse daily."},{"title":"We check every listing","text":"Manual review before anything goes live."},{"title":"Escrow on delivery","text":"Payment held until handover is confirmed."}],"proof":{"quote":"RM negotiated fairly on items that would otherwise have gone to landfill.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List recovered materials"},{"slug":"mining","name":"Mining","cardTeaser":"We can help move surplus chemicals, parts and plant off site.","headline":"Move surplus chemicals, parts and plant off site","lead":"Campaign ends, spares sit on the books, disposal from remote sites is expensive. List surplus free and reach buyers nationally — with SDS and compliance docs attached.","benefits":[{"title":"Built for industrial stock","text":"SDS, batch info and specs attached where buyers need them."},{"title":"National reach","text":"Buyers browse by state, category, volume and document type."},{"title":"Recover book value","text":"Sell before writing off or paying for disposal."}],"materials":["Bulk chemicals","Spare parts","IBCs & packaging","Redundant plant"],"problemHeading":"Idle stock ties up capital","problems":["Bulk consumables ordered for a campaign that ended early","Spares for decommissioned plant still on the register","Limited disposal options from remote sites","Compliance docs slowing down any sale attempt"],"steps":[{"title":"List with compliance detail","text":"Attach SDS, batch info and photos."},{"title":"Buyers filter and enquire","text":"Search by category, state, volume and documents."},{"title":"Verified B2B only","text":"Every listing checked by our team."},{"title":"Paid on delivery","text":"Escrow protects both sides through to handover."}],"cta":"Register free","ctaSub":"List mining surplus"},{"slug":"waste-recycling","name":"Waste & recycling","cardTeaser":"We can help you sell stock that does not fit your commodity lanes.","headline":"Sell surplus that does not fit your commodity lanes","lead":"Equipment upgrades, surplus chemicals and usable stock outside your core streams — list it free and reach industrial buyers you would not find through your usual network.","benefits":[{"title":"Free listings","text":"Commission only when you sell."},{"title":"Cross-industry buyers","text":"Construction, water, food and manufacturing businesses on the platform."},{"title":"Cash, not landfill","text":"Bingo Industries traded 10.5 tonnes of oversupplied chemical for cash through RM."}],"materials":["Processing equipment","Surplus chemicals","Organics","Packaging"],"problemHeading":"Not everything fits your processing lines","problems":["Redundant plant after equipment upgrades","Surplus consumables from processing operations","Usable stock outside your commodity streams","No fast channel to industrial buyers"],"steps":[{"title":"List with industrial detail","text":"Equipment, chemicals, organics and packaging."},{"title":"Buyers across industries","text":"Businesses browse by category and location."},{"title":"Listing review","text":"Our team checks every post before it goes live."},{"title":"Escrow payment","text":"Held until delivery is confirmed."}],"proof":{"quote":"We traded it for cash and saved disposal costs — diverted from landfill.","author":"Mamdouh Elomar","company":"Bingo Industries"},"cta":"Register free","ctaSub":"List operator surplus"},{"slug":"water-wastewater","name":"Water & wastewater","cardTeaser":"We can help clear oversupplied chemicals and redundant plant from treatment ops.","headline":"Sell surplus chemicals and plant from treatment operations","lead":"Process changes leave oversupplied chemicals, IBCs and redundant valves in storage. List free with SDS attached — Osmoflo and other operators already buy and sell on the platform.","benefits":[{"title":"SDS built in","text":"Attach and filter safety data sheets — what chemical buyers expect."},{"title":"Operators on the platform","text":"Water businesses browse by category, state and document type."},{"title":"Free to list","text":"Commission only when you sell."}],"materials":["Treatment chemicals","IBCs","Valves & pumps","Redundant plant"],"problemHeading":"Upgrades leave stock behind","problems":["Oversupplied chemicals after a process or plant change","Valves, pumps and IBCs taking up storage","Disposal costing more than the material is worth","Informal buyers cannot handle SDS requirements"],"steps":[{"title":"List with SDS and batch detail","text":"Built for chemical and water industry requirements."},{"title":"Buyers search and filter","text":"By category, state, volume and document type."},{"title":"Proven in water","text":"Osmoflo procured IBCs of ACH through the platform."},{"title":"Escrow on delivery","text":"Payment when the buyer confirms receipt."}],"proof":{"quote":"Osmoflo procured IBCs of ACH for our water treatment plants through RM.","author":"Todd Billing","company":"Osmoflo"},"cta":"Register free","ctaSub":"List water industry surplus"},{"slug":"energy","name":"Energy","cardTeaser":"We can help you sell spares and decommissioned equipment before write-off.","headline":"Sell spare parts and decommissioned equipment before write-off","lead":"Outage spares never used, equipment still on the balance sheet, landfill the expensive default. List free and reach buyers in construction, utilities and manufacturing.","benefits":[{"title":"Technical listings","text":"Manufacturer, condition, dimensions and docs for serious buyers."},{"title":"Cross-industry reach","text":"Your surplus often suits buyers outside energy."},{"title":"Escrow through to handover","text":"Structured process from enquiry to delivery."}],"materials":["Cables & electrical","Spare parts","Surplus chemicals","Decommissioned plant"],"problemHeading":"Spares and assets sit too long","problems":["Spares bought for projects or outages that never ran","Decommissioned equipment still on the books","Landfill or disposal the only option on the table","No bandwidth for a formal tender on every lot"],"steps":[{"title":"List with asset detail","text":"Condition, specs and documentation."},{"title":"Buyers browse nationally","text":"Filter by category, state and price."},{"title":"Verified businesses","text":"Every listing manually checked."},{"title":"Get paid on delivery","text":"Escrow until handover confirmed."}],"proof":{"quote":"RM worked patiently through paperwork, negotiation and offloading — a fair turnaround on redundant equipment.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List energy surplus"},{"slug":"food","name":"Food","cardTeaser":"We can help you move surplus ingredients, packaging and line equipment.","headline":"Sell surplus ingredients, packaging and line equipment","lead":"SKU discontinued, line upgraded, over-ordered — usable stock should not go to waste. List free and reach verified food and industrial buyers with the dates and docs they need.","benefits":[{"title":"Free listings","text":"Commission only on successful sales."},{"title":"Dates and certs attached","text":"List with the detail food buyers require."},{"title":"Verified B2B","text":"No anonymous traders or tyre-kickers."}],"materials":["Ingredients","Packaging","Line equipment","Bulk containers"],"problemHeading":"Recipe and line changes leave stock behind","problems":["Ingredients or packaging from a discontinued SKU","Equipment redundant after a line changeover","Short-dated stock with no internal use","Informal buyers cannot meet documentation needs"],"steps":[{"title":"List with dates and specs","text":"Quantities, packaging type and certificates."},{"title":"Buyers browse by category","text":"Manufacturers, distributors and processors."},{"title":"Listing checked","text":"Reviewed before going live."},{"title":"Escrow payment","text":"Released on confirmed delivery."}],"cta":"Register free","ctaSub":"List food industry surplus"},{"slug":"agriculture","name":"Agriculture","cardTeaser":"We can help you sell inputs and equipment before the season turns.","headline":"Sell surplus inputs and equipment before the season turns","lead":"Chemicals, packaging and equipment bought for a season that did not happen — list free and reach buyers nationally, not just locally.","benefits":[{"title":"Free to list","text":"Pay commission only when you sell."},{"title":"Organics category","text":"Agricultural materials listed with industrial detail."},{"title":"National buyers","text":"Businesses across states browse organics, chemicals and equipment."}],"materials":["Ag chemicals","Fertilisers","Packaging","Farm equipment"],"problemHeading":"Season changes leave stock in the shed","problems":["Inputs bought for a season that did not eventuate","Packaging left after a product line change","Replaced equipment taking up space","Local buyers only — no reach into other industries"],"steps":[{"title":"List bulk or packaged stock","text":"Quantities, location and compliance docs."},{"title":"Buyers search nationally","text":"By category, state and volume."},{"title":"We review listings","text":"Checked before going live."},{"title":"Paid on delivery","text":"Escrow until buyer confirms."}],"cta":"Register free","ctaSub":"List agricultural surplus"},{"slug":"chemical","name":"Chemical","cardTeaser":"We can help you sell bulk surplus with SDS and compliance docs attached.","headline":"Sell surplus chemicals with SDS attached","lead":"Campaign finished, product still in tank, disposal costs more than it is worth. List free with SDS, batch detail and certificates — buyers filter by document type before they enquire.","benefits":[{"title":"Compliance-first","text":"SDS, certificates and batch details attached and filterable."},{"title":"Chemical buyers","text":"Businesses search by document type and category."},{"title":"Free listing","text":"Commission only when you sell."}],"materials":["Bulk product","IBCs & drums","Surplus packaging","Specialty chemicals"],"problemHeading":"Bulk surplus without docs does not sell","problems":["Product left in tank after a campaign or contract ends","SDS and batch info slowing informal sales","Disposal costing more than recovery","Buyers ignoring listings without compliance docs"],"steps":[{"title":"Attach SDS and batch detail","text":"What chemical buyers and auditors expect."},{"title":"Buyers filter first","text":"By document type, category and volume."},{"title":"Listing review","text":"Checked by our team."},{"title":"Escrow on delivery","text":"Payment when handover confirmed."}],"cta":"Register free","ctaSub":"List chemical surplus"}],"roles":[{"slug":"purchasing","name":"Purchasing","cardTeaser":"Buy at ~50% off","headline":"Buy surplus stock at roughly half new price","lead":"Procurement teams source chemicals, materials and equipment from verified sellers on Resource Marketplace — typically around 50% below new supply, with payment held in escrow until delivery.","benefits":[{"title":"~50% below new","text":"Surplus from verified sellers, not unknown traders."},{"title":"Escrow protection","text":"Pay on the platform. Funds released when you confirm delivery."},{"title":"Filter before you enquire","text":"Category, state, price, volume, shipping and SDS."}],"materials":["Chemicals","Equipment","Materials","Organics"],"materialsHeading":"What teams source","problemHeading":"New supply pricing hurts margins","problems":["Material costs blowing out on every quote","Hard-to-find items delaying production or site work","No time to vet one-off sellers on Gumtree or email","Need lower prices without losing accountability"],"steps":[{"title":"Browse verified listings","text":"Filter by what you need before you enquire."},{"title":"Enquire on platform","text":"Deal with verified businesses, not anonymous sellers."},{"title":"Pay through escrow","text":"No upfront risk to unknown suppliers."},{"title":"Confirm delivery","text":"Release payment once stock arrives on site."}],"stats":[{"value":"~50%","label":"Below new supply on average"},{"value":"Escrow","label":"Pay only on delivery"},{"value":"Verified","label":"B2B sellers only"}],"cta":"Browse listings","ctaSub":"Register to buy","mode":"buy"},{"slug":"warehouse","name":"Warehouse","cardTeaser":"Clear idle stock","headline":"Clear rack space and sell what is sitting idle","lead":"Slow-moving stock blocks pick paths and stays on the books. Catalogue surplus in Warehouse, post to the marketplace free, and let buyers come to you.","benefits":[{"title":"Free to list","text":"Commission only when stock sells."},{"title":"Catalogue first","text":"Warehouse product records everything, then posts selected items."},{"title":"Live inventory","text":"Sales update stock in the system automatically."}],"materials":["Slow movers","Obsolete packaging","Redundant equipment","Bulk consumables"],"problemHeading":"Surplus has nowhere to go","problems":["Idle stock eating rack space and pick paths","No process for moving surplus out","Finance asking why obsolete stock is still on the books","Write-downs looming before anyone tried to sell"],"steps":[{"title":"Catalogue in Warehouse","text":"Record surplus inventory in one place."},{"title":"Post to marketplace","text":"Free listing with quantities, location and attachments."},{"title":"Buyers enquire","text":"Verified businesses browse and contact you on platform."},{"title":"Inventory updates","text":"Stock adjusts when a sale completes."}],"cta":"Register free","ctaSub":"Start listing surplus"},{"slug":"asset-managers","name":"Asset managers","cardTeaser":"Recover asset value","headline":"Sell redundant plant before write-off or disposal","lead":"Decommissioned equipment and spare parts libraries tie up capital. List free with technical detail and reach buyers in construction, water, energy and manufacturing.","benefits":[{"title":"Free listings","text":"Commission only on sale."},{"title":"Technical detail","text":"Manufacturer, condition, dimensions and documentation."},{"title":"Buyers outside your sector","text":"Equipment often suits other industries."}],"materials":["Decommissioned plant","Spare parts","Surplus consumables","Redundant equipment"],"problemHeading":"Assets with no internal use","problems":["Redundant plant still on the register","Disposal quotes exceeding recoverable value","No time for a formal tender on every lot","Buyers exist in other industries — no channel to reach them"],"steps":[{"title":"List with asset detail","text":"Specs, condition and docs for serious buyers."},{"title":"Cross-industry reach","text":"Construction, water, energy and manufacturing browse."},{"title":"Verified only","text":"Every listing checked. No lowballers."},{"title":"Escrow to handover","text":"Structured from enquiry to delivery."}],"proof":{"quote":"Easy and efficient turnaround on a sale of redundant equipment.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List redundant assets"},{"slug":"sustainability","name":"Sustainability","cardTeaser":"Divert and report","headline":"Hit diversion targets and get paid for surplus","lead":"Usable stock does not have to go to landfill. List free, match with verified buyers, recover value and keep records for audit and ESG reporting.","benefits":[{"title":"Diversion with revenue","text":"Sales generate cash, not just landfill avoidance."},{"title":"Hard categories supported","text":"Chemicals, organics and industrial materials with compliance docs."},{"title":"Traceable outcomes","text":"Platform records support audit and reporting."}],"materials":["Surplus chemicals","Organics","Equipment","Packaging"],"problemHeading":"Targets without an outlet","problems":["Diversion targets with no reliable buyer network","Disposal the default because outreach takes too long","Auditors asking where material went","Circular economy commitments without a B2B channel"],"steps":[{"title":"List usable surplus","text":"Free, with the compliance detail auditors expect."},{"title":"Match with buyers","text":"Verified businesses browse by category and docs."},{"title":"Record the outcome","text":"Structured listings and transaction history."},{"title":"Recover value","text":"Revenue alongside diversion metrics."}],"proof":{"quote":"Access to items that would otherwise be disposed of — aligns with our sustainability focus.","author":"Todd Billing","company":"Osmoflo"},"cta":"Register free","ctaSub":"Start diverting surplus"}]};
+  const USE_CASE_DATA = {"shared":{"trust":[{"value":"Free","label":"No cost to list"},{"value":"Stripe","label":"Secure online payments"},{"value":"B2B","label":"Verified businesses only"}]},"industries":[{"slug":"construction","name":"Construction","cardTeaser":"We can help clear your sites and get in required goods cheaply.","headline":"Turn site surplus into cash, not skip fees","lead":"Leftover steel, formwork and fittings cost money to store and dump. List them free on Resource Marketplace and sell to contractors who need them now.","benefits":[{"title":"List for nothing","text":"Posting is free. You only pay commission when something sells."},{"title":"Buyers already looking","text":"Hundreds of industrial businesses browse listings every week by category, state and volume."},{"title":"Paid securely","text":"Payments run through Stripe, so there's no chasing invoices."}],"materials":["Formwork & scaffolding","Steel & fittings","Packaging","Plant & tools"],"problemHeading":"When projects finish, stock stays","problems":["Laydown areas full of materials from the last job","Specs changed on the next project and stock no longer fits","Skip and landfill costs hitting job margins","Client or ESG reports asking where surplus went"],"steps":[{"title":"Post your surplus","text":"Free listing with quantities, location, photos and specs."},{"title":"Buyers enquire","text":"Contractors and industrial businesses search by what they need."},{"title":"Arrange delivery","text":"Agree pickup or drop-off with a verified business on the platform."},{"title":"Get paid","text":"Payment is processed securely through Stripe once the deal is done."}],"proof":{"quote":"RM found a new home for 10.5 tonnes of oversupplied chemical — traded for cash and diverted from landfill.","author":"Mamdouh Elomar","company":"Bingo Industries"},"cta":"Register free","ctaSub":"Start listing project surplus"},{"slug":"demolition","name":"Demolition","cardTeaser":"We can help you sell recovered materials and equipment.","headline":"Get paid for what comes off the building","lead":"Metals, fixtures and plant stripped from site often go to waste because finding a buyer takes too long. List free and reach businesses outside demolition who will pay for it.","benefits":[{"title":"Free to list","text":"No upfront cost. Commission only when you sell."},{"title":"Better diversion numbers","text":"Usable material goes to verified buyers instead of the waste stream."},{"title":"Documented sales","text":"Attachments and platform records support your reporting."}],"materials":["Recovered metals","Fixtures","Plant & equipment","Building materials"],"problemHeading":"Recovery without a buyer is just waste","problems":["Good material mixed into waste because there is no ready buyer","Plant idle between contracts, costing yard space","Diversion targets hard to hit without a reliable outlet","No time to run informal sales while jobs are moving"],"steps":[{"title":"List what you recovered","text":"Weights, specs, photos — whatever helps buyers commit."},{"title":"Reach other industries","text":"Construction, manufacturing and recycling businesses browse daily."},{"title":"We check every listing","text":"Manual review before anything goes live."},{"title":"Secure payment","text":"Paid securely through Stripe."}],"proof":{"quote":"RM negotiated fairly on items that would otherwise have gone to landfill.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List recovered materials"},{"slug":"mining","name":"Mining","cardTeaser":"We can help move surplus chemicals, parts and plant off site.","headline":"Move surplus chemicals, parts and plant off site","lead":"Campaign ends, spares sit on the books, disposal from remote sites is expensive. List surplus free and reach buyers nationally — with SDS and compliance docs attached.","benefits":[{"title":"Built for industrial stock","text":"SDS, batch info and specs attached where buyers need them."},{"title":"National reach","text":"Buyers browse by state, category, volume and document type."},{"title":"Recover book value","text":"Sell before writing off or paying for disposal."}],"materials":["Bulk chemicals","Spare parts","IBCs & packaging","Redundant plant"],"problemHeading":"Idle stock ties up capital","problems":["Bulk consumables ordered for a campaign that ended early","Spares for decommissioned plant still on the register","Limited disposal options from remote sites","Compliance docs slowing down any sale attempt"],"steps":[{"title":"List with compliance detail","text":"Attach SDS, batch info and photos."},{"title":"Buyers filter and enquire","text":"Search by category, state, volume and documents."},{"title":"Verified B2B only","text":"Every listing checked by our team."},{"title":"Get paid","text":"Stripe handles the payment for both sides."}],"cta":"Register free","ctaSub":"List mining surplus"},{"slug":"waste-recycling","name":"Waste & recycling","cardTeaser":"We can help you sell stock that does not fit your commodity lanes.","headline":"Sell surplus that does not fit your commodity lanes","lead":"Equipment upgrades, surplus chemicals and usable stock outside your core streams — list it free and reach industrial buyers you would not find through your usual network.","benefits":[{"title":"Free listings","text":"Commission only when you sell."},{"title":"Cross-industry buyers","text":"Construction, water, food and manufacturing businesses on the platform."},{"title":"Cash, not landfill","text":"Bingo Industries traded 10.5 tonnes of oversupplied chemical for cash through RM."}],"materials":["Processing equipment","Surplus chemicals","Organics","Packaging"],"problemHeading":"Not everything fits your processing lines","problems":["Redundant plant after equipment upgrades","Surplus consumables from processing operations","Usable stock outside your commodity streams","No fast channel to industrial buyers"],"steps":[{"title":"List with industrial detail","text":"Equipment, chemicals, organics and packaging."},{"title":"Buyers across industries","text":"Businesses browse by category and location."},{"title":"Listing review","text":"Our team checks every post before it goes live."},{"title":"Secure payment","text":"Processed securely through Stripe."}],"proof":{"quote":"We traded it for cash and saved disposal costs — diverted from landfill.","author":"Mamdouh Elomar","company":"Bingo Industries"},"cta":"Register free","ctaSub":"List operator surplus"},{"slug":"water-wastewater","name":"Water & wastewater","cardTeaser":"We can help clear oversupplied chemicals and redundant plant from treatment ops.","headline":"Sell surplus chemicals and plant from treatment operations","lead":"Process changes leave oversupplied chemicals, IBCs and redundant valves in storage. List free with SDS attached — Osmoflo and other operators already buy and sell on the platform.","benefits":[{"title":"SDS built in","text":"Attach and filter safety data sheets — what chemical buyers expect."},{"title":"Operators on the platform","text":"Water businesses browse by category, state and document type."},{"title":"Free to list","text":"Commission only when you sell."}],"materials":["Treatment chemicals","IBCs","Valves & pumps","Redundant plant"],"problemHeading":"Upgrades leave stock behind","problems":["Oversupplied chemicals after a process or plant change","Valves, pumps and IBCs taking up storage","Disposal costing more than the material is worth","Informal buyers cannot handle SDS requirements"],"steps":[{"title":"List with SDS and batch detail","text":"Built for chemical and water industry requirements."},{"title":"Buyers search and filter","text":"By category, state, volume and document type."},{"title":"Proven in water","text":"Osmoflo procured IBCs of ACH through the platform."},{"title":"Secure payment","text":"Paid securely through Stripe once the deal is done."}],"proof":{"quote":"Osmoflo procured IBCs of ACH for our water treatment plants through RM.","author":"Todd Billing","company":"Osmoflo"},"cta":"Register free","ctaSub":"List water industry surplus"},{"slug":"energy","name":"Energy","cardTeaser":"We can help you sell spares and decommissioned equipment before write-off.","headline":"Sell spare parts and decommissioned equipment before write-off","lead":"Outage spares never used, equipment still on the balance sheet, landfill the expensive default. List free and reach buyers in construction, utilities and manufacturing.","benefits":[{"title":"Technical listings","text":"Manufacturer, condition, dimensions and docs for serious buyers."},{"title":"Cross-industry reach","text":"Your surplus often suits buyers outside energy."},{"title":"Secure payments","text":"Structured process from enquiry to delivery."}],"materials":["Cables & electrical","Spare parts","Surplus chemicals","Decommissioned plant"],"problemHeading":"Spares and assets sit too long","problems":["Spares bought for projects or outages that never ran","Decommissioned equipment still on the books","Landfill or disposal the only option on the table","No bandwidth for a formal tender on every lot"],"steps":[{"title":"List with asset detail","text":"Condition, specs and documentation."},{"title":"Buyers browse nationally","text":"Filter by category, state and price."},{"title":"Verified businesses","text":"Every listing manually checked."},{"title":"Get paid","text":"Paid securely through Stripe."}],"proof":{"quote":"RM worked patiently through paperwork, negotiation and offloading — a fair turnaround on redundant equipment.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List energy surplus"},{"slug":"food","name":"Food","cardTeaser":"We can help you move surplus ingredients, packaging and line equipment.","headline":"Sell surplus ingredients, packaging and line equipment","lead":"SKU discontinued, line upgraded, over-ordered — usable stock should not go to waste. List free and reach verified food and industrial buyers with the dates and docs they need.","benefits":[{"title":"Free listings","text":"Commission only on successful sales."},{"title":"Dates and certs attached","text":"List with the detail food buyers require."},{"title":"Verified B2B","text":"No anonymous traders or tyre-kickers."}],"materials":["Ingredients","Packaging","Line equipment","Bulk containers"],"problemHeading":"Recipe and line changes leave stock behind","problems":["Ingredients or packaging from a discontinued SKU","Equipment redundant after a line changeover","Short-dated stock with no internal use","Informal buyers cannot meet documentation needs"],"steps":[{"title":"List with dates and specs","text":"Quantities, packaging type and certificates."},{"title":"Buyers browse by category","text":"Manufacturers, distributors and processors."},{"title":"Listing checked","text":"Reviewed before going live."},{"title":"Secure payment","text":"Processed securely through Stripe."}],"cta":"Register free","ctaSub":"List food industry surplus"},{"slug":"agriculture","name":"Agriculture","cardTeaser":"We can help you sell inputs and equipment before the season turns.","headline":"Sell surplus inputs and equipment before the season turns","lead":"Chemicals, packaging and equipment bought for a season that did not happen — list free and reach buyers nationally, not just locally.","benefits":[{"title":"Free to list","text":"Pay commission only when you sell."},{"title":"Organics category","text":"Agricultural materials listed with industrial detail."},{"title":"National buyers","text":"Businesses across states browse organics, chemicals and equipment."}],"materials":["Ag chemicals","Fertilisers","Packaging","Farm equipment"],"problemHeading":"Season changes leave stock in the shed","problems":["Inputs bought for a season that did not eventuate","Packaging left after a product line change","Replaced equipment taking up space","Local buyers only — no reach into other industries"],"steps":[{"title":"List bulk or packaged stock","text":"Quantities, location and compliance docs."},{"title":"Buyers search nationally","text":"By category, state and volume."},{"title":"We review listings","text":"Checked before going live."},{"title":"Get paid","text":"Paid securely through Stripe."}],"cta":"Register free","ctaSub":"List agricultural surplus"},{"slug":"chemical","name":"Chemical","cardTeaser":"We can help you sell bulk surplus with SDS and compliance docs attached.","headline":"Sell surplus chemicals with SDS attached","lead":"Campaign finished, product still in tank, disposal costs more than it is worth. List free with SDS, batch detail and certificates — buyers filter by document type before they enquire.","benefits":[{"title":"Compliance-first","text":"SDS, certificates and batch details attached and filterable."},{"title":"Chemical buyers","text":"Businesses search by document type and category."},{"title":"Free listing","text":"Commission only when you sell."}],"materials":["Bulk product","IBCs & drums","Surplus packaging","Specialty chemicals"],"problemHeading":"Bulk surplus without docs does not sell","problems":["Product left in tank after a campaign or contract ends","SDS and batch info slowing informal sales","Disposal costing more than recovery","Buyers ignoring listings without compliance docs"],"steps":[{"title":"Attach SDS and batch detail","text":"What chemical buyers and auditors expect."},{"title":"Buyers filter first","text":"By document type, category and volume."},{"title":"Listing review","text":"Checked by our team."},{"title":"Secure payment","text":"Paid securely through Stripe."}],"cta":"Register free","ctaSub":"List chemical surplus"}],"roles":[{"slug":"purchasing","name":"Purchasing","cardTeaser":"Buy at ~50% off","headline":"Buy surplus stock at roughly half new price","lead":"Procurement teams source chemicals, materials and equipment from verified sellers on Resource Marketplace — typically around 50% below new supply, with payment handled securely through Stripe.","benefits":[{"title":"~50% below new","text":"Surplus from verified sellers, not unknown traders."},{"title":"Secure payments","text":"Pay securely through Stripe, with a verified business on the other side."},{"title":"Filter before you enquire","text":"Category, state, price, volume, shipping and SDS."}],"materials":["Chemicals","Equipment","Materials","Organics"],"materialsHeading":"What teams source","problemHeading":"New supply pricing hurts margins","problems":["Material costs blowing out on every quote","Hard-to-find items delaying production or site work","No time to vet one-off sellers on Gumtree or email","Need lower prices without losing accountability"],"steps":[{"title":"Browse verified listings","text":"Filter by what you need before you enquire."},{"title":"Enquire on platform","text":"Deal with verified businesses, not anonymous sellers."},{"title":"Pay securely","text":"No upfront risk to unknown suppliers."},{"title":"Take delivery","text":"Coordinate freight and receive your stock on site."}],"stats":[{"value":"~50%","label":"Below new supply on average"},{"value":"Stripe","label":"Secure online payments"},{"value":"Verified","label":"B2B sellers only"}],"cta":"Browse listings","ctaSub":"Register to buy","mode":"buy"},{"slug":"warehouse","name":"Warehouse","cardTeaser":"Clear idle stock","headline":"Clear rack space and sell what is sitting idle","lead":"Slow-moving stock blocks pick paths and stays on the books. Catalogue surplus in Warehouse, post to the marketplace free, and let buyers come to you.","benefits":[{"title":"Free to list","text":"Commission only when stock sells."},{"title":"Catalogue first","text":"Warehouse product records everything, then posts selected items."},{"title":"Live inventory","text":"Sales update stock in the system automatically."}],"materials":["Slow movers","Obsolete packaging","Redundant equipment","Bulk consumables"],"problemHeading":"Surplus has nowhere to go","problems":["Idle stock eating rack space and pick paths","No process for moving surplus out","Finance asking why obsolete stock is still on the books","Write-downs looming before anyone tried to sell"],"steps":[{"title":"Catalogue in Warehouse","text":"Record surplus inventory in one place."},{"title":"Post to marketplace","text":"Free listing with quantities, location and attachments."},{"title":"Buyers enquire","text":"Verified businesses browse and contact you on platform."},{"title":"Inventory updates","text":"Stock adjusts when a sale completes."}],"cta":"Register free","ctaSub":"Start listing surplus"},{"slug":"asset-managers","name":"Asset managers","cardTeaser":"Recover asset value","headline":"Sell redundant plant before write-off or disposal","lead":"Decommissioned equipment and spare parts libraries tie up capital. List free with technical detail and reach buyers in construction, water, energy and manufacturing.","benefits":[{"title":"Free listings","text":"Commission only on sale."},{"title":"Technical detail","text":"Manufacturer, condition, dimensions and documentation."},{"title":"Buyers outside your sector","text":"Equipment often suits other industries."}],"materials":["Decommissioned plant","Spare parts","Surplus consumables","Redundant equipment"],"problemHeading":"Assets with no internal use","problems":["Redundant plant still on the register","Disposal quotes exceeding recoverable value","No time for a formal tender on every lot","Buyers exist in other industries — no channel to reach them"],"steps":[{"title":"List with asset detail","text":"Specs, condition and docs for serious buyers."},{"title":"Cross-industry reach","text":"Construction, water, energy and manufacturing browse."},{"title":"Verified only","text":"Every listing checked. No lowballers."},{"title":"Secure payment","text":"Structured from enquiry to delivery."}],"proof":{"quote":"Easy and efficient turnaround on a sale of redundant equipment.","author":"Ray Gy","company":"Downer"},"cta":"Register free","ctaSub":"List redundant assets"},{"slug":"sustainability","name":"Sustainability","cardTeaser":"Divert and report","headline":"Hit diversion targets and get paid for surplus","lead":"Usable stock does not have to go to landfill. List free, match with verified buyers, recover value and keep records for audit and ESG reporting.","benefits":[{"title":"Diversion with revenue","text":"Sales generate cash, not just landfill avoidance."},{"title":"Hard categories supported","text":"Chemicals, organics and industrial materials with compliance docs."},{"title":"Traceable outcomes","text":"Platform records support audit and reporting."}],"materials":["Surplus chemicals","Organics","Equipment","Packaging"],"problemHeading":"Targets without an outlet","problems":["Diversion targets with no reliable buyer network","Disposal the default because outreach takes too long","Auditors asking where material went","Circular economy commitments without a B2B channel"],"steps":[{"title":"List usable surplus","text":"Free, with the compliance detail auditors expect."},{"title":"Match with buyers","text":"Verified businesses browse by category and docs."},{"title":"Record the outcome","text":"Structured listings and transaction history."},{"title":"Recover value","text":"Revenue alongside diversion metrics."}],"proof":{"quote":"Access to items that would otherwise be disposed of — aligns with our sustainability focus.","author":"Todd Billing","company":"Osmoflo"},"cta":"Register free","ctaSub":"Start diverting surplus"}]};
 
   const industryBySlug = indexBySlug(USE_CASE_DATA.industries);
   const roleBySlug = indexBySlug(USE_CASE_DATA.roles);
@@ -2019,31 +2187,22 @@
   function renderSolutionsNav() {
     if (!dom.solutionsNav) return;
 
-    const industryCards = USE_CASE_DATA.industries
-      .map(
-        (item) =>
-          rawHtml`<a class="solution-card" href="#/industry/${item.slug}">
-            <span class="solution-card-title">${escapeHtml(item.name)}</span>
-            <span class="solution-card-desc">${escapeHtml(item.cardTeaser)}</span>
-          </a>`
-      )
-      .join('');
-
-    const roleItems = USE_CASE_DATA.roles
-      .map(
-        (item) =>
-          rawHtml`<li><a class="solution-role-link" href="#/role/${item.slug}"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.cardTeaser)}</span></a></li>`
-      )
-      .join('');
+    const dirLinks = (items, routePrefix) =>
+      items
+        .map(
+          (item) =>
+            rawHtml`<a class="dir-link" href="#/${routePrefix}/${item.slug}"><span class="dir-name">${escapeHtml(item.name)}</span><span class="dir-teaser">${escapeHtml(item.cardTeaser)}</span></a>`
+        )
+        .join('');
 
     dom.solutionsNav.innerHTML = rawHtml`
       <div class="solutions-group">
-        <div class="solutions-group-head"><h3>Industries</h3></div>
-        <div class="solutions-grid">${industryCards}</div>
+        <div class="solutions-group-head"><h3>By industry</h3></div>
+        <div class="dir-grid">${dirLinks(USE_CASE_DATA.industries, 'industry')}</div>
       </div>
       <div class="solutions-group">
-        <div class="solutions-group-head"><h3>Teams &amp; roles</h3></div>
-        <ul class="solution-role-list">${roleItems}</ul>
+        <div class="solutions-group-head"><h3>By team or role</h3></div>
+        <div class="dir-grid dir-grid--roles">${dirLinks(USE_CASE_DATA.roles, 'role')}</div>
       </div>
     `;
   }
@@ -2063,7 +2222,7 @@
     const ctaSub = page.ctaSub || page.cta;
     const ctaSubtext =
       page.mode === 'buy'
-        ? 'Verified sellers. Pay through escrow when stock arrives.'
+        ? 'Verified sellers. Secure payment through Stripe.'
         : 'Listing is free. Commission only when you sell.';
 
     const trustItems = USE_CASE_DATA.shared.trust
@@ -2091,7 +2250,7 @@
     const stepCards = page.steps
       .map(
         (step, stepIndex) =>
-          rawHtml`<article class="uc-step-card"><span class="uc-step-num">${stepIndex + 1}</span><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.text)}</p></article>`
+          rawHtml`<article class="uc-step-card"><span class="uc-step-label">Step 0${stepIndex + 1}</span><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.text)}</p></article>`
       )
       .join('');
 
@@ -2252,6 +2411,30 @@
     track.innerHTML = imgs.repeat(4);
   }
 
+  // Inject FAQPage structured data (JSON-LD) so search engines can show rich results
+  function renderFaqSchema() {
+    const toPlainText = (htmlStr) => {
+      const spaced = htmlStr.replace(/<\/(p|li|ol|ul|div)>/gi, ' ');
+      const tmp = document.createElement('div');
+      tmp.innerHTML = spaced;
+      return (tmp.textContent || '').replace(/\s+/g, ' ').trim();
+    };
+
+    const mainEntity = FAQ_DATA.flatMap((group) =>
+      group.items.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: toPlainText(item.a) },
+      }))
+    );
+
+    const schema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity };
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.textContent = JSON.stringify(schema);
+    document.head.appendChild(el);
+  }
+
   function initFaqAccordion() {
     document.getElementById('faq-groups')?.addEventListener('click', (e) => {
       const button = e.target.closest('.faq-question');
@@ -2271,6 +2454,7 @@
   renderSolutionsNav();
   initPartnerMarquee();
   renderFaq();
+  renderFaqSchema();
   initFaqAccordion();
   initRouter();
 })();
