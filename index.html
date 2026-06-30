@@ -9,11 +9,14 @@
   Routing: #/ | #/industry/{slug} | #/role/{slug} | #/enquiry
 
   DEV HANDOFF - placeholders to wire up before launch:
-    • CTA links with href="#"  → real app routes:
+    • CTA links with href="#"  → real app routes (all sign-up unless noted):
+        - "Join the circular economy"      (hero)
+        - "List for free"                  (CTA band)
         - "Sign up" / "Register free"      (header, How-it-works CTA, footer, landing CTAs)
         - "Log in"                         (header, footer)
-        - "View Active Listings" / "Browse listings"  (hero + landing CTAs)
-    • Enquiry form: <form class="enquiry-form" action="#" method="post">  → real endpoint + validation + success state
+        - "Browse listings"                (footer + buy-mode landing CTAs)
+    • Contact: #/enquiry now scrolls to the footer (id="contact"); footer phone/email are the contact points
+    • Newsletter: <form class="newsletter-form" action="#">  → real email-capture endpoint + validation + success state
     • Footer email hello@resourcemarketplace.com.au  → confirm real inbox
     • Footer "Terms & Conditions" / "Privacy Policy" href="#"  → real pages (also referenced in FAQ)
     • Update og:url / og:image / canonical below if the domain or share image changes
@@ -44,7 +47,7 @@
   <meta name="twitter:image" content="https://www.resourcemarketplace.com.au/main-logo.png">
   <style>
     /* Layout: tokens, base, header, hero, video, partners, solutions hub, FAQ */
-    /* Pages: use-case landings, feature spotlights, testimonials, flow, enquiry */
+    /* Pages: use-case landings, feature spotlights, testimonials, flow */
     /* Components: buttons, mocks, footer | Responsive + reduced-motion at end */
 
     :root {
@@ -153,43 +156,68 @@
     }
 
     .hero {
-      text-align: center;
-      min-height: clamp(340px, 64svh, 560px);
-      padding: clamp(2rem, 5vw, 3.25rem) 0;
-      display: flex;
-      flex-direction: column;
+      padding: clamp(2.25rem, 5vw, 4rem) 0 clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: clamp(2rem, 5vw, 4rem);
       align-items: center;
-      justify-content: center;
-      gap: 0;
     }
 
     .hero h1 {
-      margin: 0 auto;
-      max-width: min(56rem, 100%);
-      font-size: clamp(1.55rem, 3.1vw, 2.35rem);
-      font-weight: 500;
-      line-height: 1.32;
-      letter-spacing: -0.02em;
-      text-align: center;
-    }
-
-    .hero-headline {
-      display: inline-block;
-      max-width: 100%;
-      text-align: center;
-    }
-
-    .hero-lead {
+      margin: 0;
+      font-size: clamp(2rem, 4.4vw, 3.1rem);
       font-weight: 800;
-      color: var(--primary);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
     }
 
     .hero-sub {
+      margin: clamp(0.9rem, 2vw, 1.25rem) 0 0;
+      max-width: 40ch;
+      font-size: clamp(1.02rem, 1.7vw, 1.18rem);
       font-weight: 500;
+      color: var(--muted);
+      line-height: 1.55;
     }
 
     .hero-cta {
-      margin-top: clamp(1.35rem, 3.2vw, 2rem);
+      margin-top: clamp(1.35rem, 3vw, 1.85rem);
+    }
+
+    .hero-trust {
+      margin: clamp(1.35rem, 3vw, 1.85rem) 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.4rem;
+    }
+
+    .hero-trust li {
+      position: relative;
+      padding-left: 1.15rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .hero-trust li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .hero-media .video-embed {
+      margin: 0;
+      max-width: none;
     }
 
     .btn-cta {
@@ -208,20 +236,6 @@
 
     .btn-cta:hover {
       transform: translateY(-1px);
-    }
-
-    .video-section {
-      padding: 0 0 clamp(1.5rem, 4vw, 2.5rem);
-      text-align: center;
-    }
-
-    .video-section-label {
-      margin: 0 0 1rem;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
     }
 
     .video-embed {
@@ -320,36 +334,26 @@
       color: var(--muted);
     }
 
-    .partner-viewport {
-      overflow: hidden;
-      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    }
-
-    .partner-track {
+    .partner-row {
       display: flex;
-      width: max-content;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 3rem;
-      animation: partnerMarquee 28s linear infinite;
+      justify-content: center;
+      gap: clamp(1.75rem, 5vw, 3.5rem);
     }
 
     .partner-logo {
       flex: 0 0 auto;
-      width: 142px;
-      height: 62px;
+      height: 46px;
+      width: auto;
+      max-width: 150px;
       object-fit: contain;
-      opacity: 0.9;
+      opacity: 0.82;
       transition: opacity 0.2s ease;
     }
 
     .partner-logo:hover {
       opacity: 1;
-    }
-
-    @keyframes partnerMarquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
     }
 
     .impact {
@@ -425,24 +429,68 @@
       line-height: 1.6;
     }
 
-    .solutions {
-      padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2.75rem, 5vw, 4rem);
+    .audience {
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0;
       border-top: 1px solid var(--line);
     }
 
-    .solutions h2 {
+    .audience h2 {
       margin: 0;
       text-align: center;
       font-size: clamp(1.5rem, 2.8vw, 2.1rem);
       letter-spacing: -0.02em;
     }
 
-    .solutions-group + .solutions-group {
-      margin-top: clamp(2.25rem, 4vw, 3rem);
+    .role-cards {
+      margin-top: clamp(1.6rem, 4vw, 2.25rem);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
     }
 
-    .solutions-group-head h3 {
-      margin: 0 0 0.35rem;
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 1.4rem 1.35rem;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 30px rgba(90, 186, 178, 0.14);
+    }
+
+    .role-card-title {
+      font-weight: 800;
+      font-size: 1.08rem;
+      letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+    }
+
+    .role-card:hover .role-card-title {
+      color: var(--primary-hover);
+    }
+
+    .role-card-teaser {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .audience-industries {
+      margin-top: clamp(2.25rem, 4vw, 3rem);
+      padding-top: clamp(1.75rem, 3.5vw, 2.25rem);
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .audience-sub {
+      margin: 0 0 1.1rem;
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.14em;
@@ -450,24 +498,52 @@
       color: var(--muted);
     }
 
+    .cta-band {
+      padding: clamp(2.75rem, 6vw, 4rem) 0;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--primary) 10%, var(--bg));
+    }
+
+    .cta-band-inner {
+      max-width: 42rem;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+      letter-spacing: -0.02em;
+    }
+
+    .cta-band p {
+      margin: 0.7rem auto 1.4rem;
+      max-width: 36rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
     #solutions-nav {
-      margin-top: 1.8rem;
-    }
-
-    .dir-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: clamp(1.5rem, 4vw, 3rem);
-    }
-
-    .dir-grid--roles {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
     }
 
     .dir-link {
-      display: block;
-      padding: 1.1rem 0;
-      border-top: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .dir-link:hover {
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 8%, var(--card));
     }
 
     .dir-link:focus-visible {
@@ -476,14 +552,14 @@
     }
 
     .dir-name {
-      font-size: 1.02rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
       transition: color 0.15s ease;
     }
 
     .dir-link:hover .dir-name {
-      color: var(--primary);
+      color: var(--primary-hover);
     }
 
     #view-home[hidden],
@@ -949,6 +1025,75 @@
       max-width: min(30rem, 100%);
     }
 
+    .feature-grid--media-left {
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+    }
+
+    .feature-grid--media-left .feature-copy {
+      justify-self: end;
+      width: 100%;
+      max-width: min(32rem, 100%);
+    }
+
+    .inventory-mock .inv-row {
+      display: grid;
+      grid-template-columns: 1fr 2.2rem 4.4rem;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      color: #2a2a2a;
+    }
+
+    .inventory-mock .inv-row span:nth-child(2) {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+    }
+
+    .inventory-mock .inv-head {
+      border-top: 0;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .inventory-mock .inv-pill {
+      justify-self: end;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--primary) 16%, #fff);
+      color: var(--primary-hover);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .inventory-mock .inv-pill--draft {
+      background: #f0eef2;
+      color: #777;
+    }
+
+    .inventory-mock .inv-foot {
+      margin-top: 0.65rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .inventory-mock .inv-foot span:last-child {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
     .filter-mock {
       max-width: 300px;
       padding: 1rem 1rem 1.1rem;
@@ -1077,91 +1222,81 @@
     }
 
     .testimonials {
-      padding: 0.8rem 0 4.2rem;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2.75rem, 5vw, 4rem);
+      border-top: 1px solid var(--line);
     }
 
-    .testimonials h2 {
+    .testimonials-head {
+      text-align: center;
+      margin-bottom: clamp(1.85rem, 4vw, 2.6rem);
+    }
+
+    .testimonials-head h2 {
       margin: 0;
-      text-align: center;
-      font-size: clamp(1.4rem, 2.6vw, 2rem);
-    }
-
-    .testimonials-sub {
-      margin: 0.65rem 0 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 1.02rem;
-      font-weight: 500;
+      font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+      letter-spacing: -0.02em;
     }
 
     .testimonials-grid {
-      margin-top: 1.8rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
+      gap: clamp(1.75rem, 4vw, 2.75rem);
     }
 
-    .testimonial-card {
-      background: var(--card-soft);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1rem 1.1rem 1.1rem;
-      position: relative;
-      transition: transform 0.18s ease, border-color 0.18s ease;
-    }
-
-    .testimonial-card::before {
-      content: "";
-      position: absolute;
-      left: 1rem;
-      top: 0;
-      width: 44px;
-      height: 3px;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .testimonial-card:hover {
-      transform: translateY(-2px);
-      border-color: #d8d5db;
-    }
-
-    .testimonial-brand {
-      margin: 0 0 0.85rem;
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .testimonial-brand img {
-      display: block;
-      max-height: 38px;
-      width: auto;
-      max-width: min(100%, 168px);
-      object-fit: contain;
-      object-position: left center;
-    }
-
-    .testimonial-quote {
+    .quote {
       margin: 0;
-      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quote blockquote {
+      margin: 0;
+      position: relative;
+      padding-top: 1.85rem;
+      font-size: 0.98rem;
+      line-height: 1.6;
       color: #1d1d1d;
     }
 
-    .testimonial-quote p {
-      margin: 0 0 0.7rem;
+    .quote blockquote::before {
+      content: "\201C";
+      position: absolute;
+      top: 0.35rem;
+      left: -0.1rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 3.1rem;
+      line-height: 0;
+      color: var(--primary);
     }
 
-    .testimonial-quote p:last-child {
-      margin-bottom: 0;
+    .quote blockquote p {
+      margin: 0;
     }
 
-    .testimonial-meta {
-      margin-top: 0.95rem;
-      font-size: 0.85rem;
-      color: var(--muted);
+    .quote figcaption {
+      margin-top: 1.2rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .quote figcaption img {
+      flex: 0 0 auto;
+      height: 28px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      object-position: left center;
+      opacity: 0.9;
+    }
+
+    .quote figcaption span {
+      font-size: 0.8rem;
       font-weight: 700;
-      line-height: 1.45;
+      color: var(--muted);
+      line-height: 1.4;
     }
 
     .btn-signup,
@@ -1198,7 +1333,16 @@
 
     .flow-head {
       margin-bottom: clamp(2rem, 4vw, 2.75rem);
-      text-align: center;
+    }
+
+    .flow-eyebrow {
+      display: block;
+      margin-bottom: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
     }
 
     .flow-head h2 {
@@ -1209,27 +1353,26 @@
 
     .flow-steps {
       list-style: none;
-      margin: 0 auto;
+      margin: 0;
       padding: 0;
-      max-width: 960px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(1.5rem, 4vw, 2.75rem);
+      gap: clamp(1.75rem, 4vw, 3rem);
     }
 
     .flow-step {
-      padding-top: 0.95rem;
-      border-top: 2px solid var(--primary);
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
     }
 
-    .flow-step-label {
-      display: block;
-      margin-bottom: 0.55rem;
-      font-size: 0.72rem;
+    .flow-num {
+      flex: 0 0 auto;
+      font-size: clamp(2rem, 4vw, 2.85rem);
       font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: color-mix(in srgb, var(--primary) 38%, transparent);
     }
 
     .flow-step h3 {
@@ -1257,108 +1400,6 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
-    }
-
-    .enquiry {
-      padding: 0.6rem 0 4.6rem;
-    }
-
-    .enquiry-head {
-      text-align: center;
-      margin-bottom: 1.35rem;
-    }
-
-    .enquiry-head h2 {
-      margin: 0;
-      font-size: clamp(1.7rem, 3vw, 2.35rem);
-      color: #121a2b;
-    }
-
-    .enquiry-head p {
-      margin: 0.55rem 0 0;
-      color: #616a7d;
-      font-size: 1.02rem;
-    }
-
-    .enquiry-card {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      display: grid;
-      grid-template-columns: 0.36fr 1fr;
-      overflow: hidden;
-    }
-
-    .enquiry-left {
-      background: var(--primary);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 0.95rem;
-      min-height: 315px;
-      padding: 1.4rem;
-      text-align: center;
-    }
-
-    .enquiry-left img {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-    }
-
-    .enquiry-left strong {
-      font-size: 1.95rem;
-      line-height: 1;
-      letter-spacing: 0.02em;
-    }
-
-    .enquiry-left span {
-      opacity: 0.95;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .enquiry-form {
-      padding: 1.45rem 1.55rem;
-      display: grid;
-      gap: 0.8rem;
-      align-content: start;
-    }
-
-    .enquiry-form input,
-    .enquiry-form textarea {
-      width: 100%;
-      border: 1px solid #d8dbe3;
-      border-radius: 5px;
-      padding: 0.7rem 0.75rem;
-      font: inherit;
-      font-size: 0.95rem;
-      background: #fafbfc;
-      color: #1f2a3d;
-    }
-
-    .enquiry-form textarea {
-      min-height: 74px;
-      resize: vertical;
-    }
-
-    .enquiry-form button {
-      justify-self: end;
-      border: none;
-      border-radius: 5px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 700;
-      padding: 0.6rem 1.05rem;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-
-    .enquiry-form button:hover {
-      background: var(--primary-hover);
     }
 
     .faq {
@@ -1486,6 +1527,85 @@
       font-weight: 700;
     }
 
+    .newsletter {
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .newsletter-inner {
+      max-width: 40rem;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .newsletter-inner h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+      letter-spacing: -0.02em;
+    }
+
+    .newsletter-inner > p {
+      margin: 0.7rem auto 1.4rem;
+      max-width: 34rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+    }
+
+    .newsletter-form input {
+      flex: 1 1 18rem;
+      max-width: 22rem;
+      padding: 0.72rem 0.95rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font: inherit;
+      font-size: 0.95rem;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .newsletter-form input:focus-visible {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+    }
+
+    .newsletter-form button {
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.72rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.12s ease;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .newsletter-form button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .newsletter-fine {
+      margin: 0.95rem 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
     .site-footer {
       border-top: 1px solid var(--line);
       background: var(--card);
@@ -1608,23 +1728,34 @@
     }
 
     @media (max-width: 980px) {
-      .dir-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
       .container {
         width: min(100% - 1.5rem, var(--maxw));
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: clamp(1.75rem, 5vw, 2.5rem);
+      }
+
+      .hero-media {
+        max-width: 30rem;
+      }
+
+      .role-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .feature-grid {
         grid-template-columns: 1fr;
       }
 
-      .feature-grid--browse {
+      .feature-grid--browse,
+      .feature-grid--media-left {
         grid-template-columns: 1fr;
       }
 
-      .feature-grid--browse .feature-copy {
+      .feature-grid--browse .feature-copy,
+      .feature-grid--media-left .feature-copy {
         justify-self: stretch;
         max-width: none;
       }
@@ -1636,14 +1767,6 @@
 
       .filter-mock {
         margin-inline: auto;
-      }
-
-      .enquiry-card {
-        grid-template-columns: 1fr;
-      }
-
-      .enquiry-left {
-        min-height: 200px;
       }
     }
 
@@ -1659,11 +1782,6 @@
     }
 
     @media (max-width: 720px) {
-      .dir-grid,
-      .dir-grid--roles {
-        grid-template-columns: 1fr;
-      }
-
       .impact-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1685,13 +1803,13 @@
       .site-footer-inner {
         grid-template-columns: 1fr;
       }
+
+      .role-cards {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .partner-track {
-        animation: none;
-      }
-
       * {
         scroll-behavior: auto;
       }
@@ -1713,51 +1831,115 @@
 
   <main id="page-main">
     <div id="view-home">
-    <section class="hero container">
-      <h1>
-        <span class="hero-headline">
-          <span class="hero-lead">A marketplace for industry.</span>
-          <span class="hero-sub"> Turn your waste into opportunity. Clear yards, purchase discounted stock, and avoid disposal costs.</span>
-        </span>
-      </h1>
-      <div class="hero-cta">
-        <a class="btn-cta" href="#">View Active Listings</a>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Turn industrial waste into opportunity.</h1>
+          <p class="hero-sub">A verified B2B marketplace where Australian businesses buy and sell surplus equipment, chemicals and materials.</p>
+          <div class="hero-cta">
+            <a class="btn-cta" href="#">Join the circular economy</a>
+          </div>
+          <ul class="hero-trust">
+            <li>Free to list</li>
+            <li>Secure Stripe payments</li>
+            <li>Verified ABN businesses</li>
+          </ul>
+        </div>
+        <div class="hero-media">
+          <div class="video-embed" id="videoEmbed">
+            <button type="button" class="video-poster" id="videoPoster" aria-label="Play Resource Marketplace overview video">
+              <img src="main-logo.png" alt="">
+              <span class="video-poster-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="video-section container" aria-labelledby="video-section-title">
-      <p class="video-section-label" id="video-section-title">Watch the overview</p>
-      <div class="video-embed" id="videoEmbed">
-        <button type="button" class="video-poster" id="videoPoster" aria-label="Play Resource Marketplace overview video">
-          <img src="main-logo.png" alt="">
-          <span class="video-poster-play" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          </span>
-        </button>
+    <section class="partners container" aria-label="Trusted by industry">
+      <p class="partners-label">Trusted by industry</p>
+      <div class="partner-row" id="partnerTrack"></div>
+    </section>
+
+    <section class="feature-spotlight" aria-labelledby="feature-warehouse-title">
+      <div class="container feature-spotlight-inner">
+        <div class="feature-grid feature-grid--media-left">
+          <div class="feature-mock inventory-mock" aria-hidden="true">
+            <div class="mock-title">Warehouse</div>
+            <div class="inv-row inv-head"><span>Item</span><span>Qty</span><span>Status</span></div>
+            <div class="inv-row"><span>Caustic soda, 25kg bags</span><span>48</span><span class="inv-pill">Listed</span></div>
+            <div class="inv-row"><span>Centrifugal pump, 5.5kW</span><span>3</span><span class="inv-pill">Listed</span></div>
+            <div class="inv-row"><span>Steel mesh sheets</span><span>120</span><span class="inv-pill inv-pill--draft">Draft</span></div>
+            <div class="inv-row"><span>IBC totes, food grade</span><span>16</span><span class="inv-pill">Listed</span></div>
+            <div class="inv-row"><span>Scaffold frames</span><span>90</span><span class="inv-pill inv-pill--draft">Draft</span></div>
+            <div class="inv-foot"><span>Yard A &middot; Redfern NSW</span><span>+ Add item</span></div>
+          </div>
+          <div class="feature-copy">
+            <h2 id="feature-warehouse-title">Digitise your warehouse and yards</h2>
+            <p>Get every pallet, drum and machine into one clean catalogue, with quantities, locations and condition recorded so nothing gets lost in the yard.</p>
+            <ul class="feature-points">
+              <li>Structured inventory for stock you would otherwise lose track of</li>
+              <li>Quantities, locations and condition in one place</li>
+              <li>Push anything to a live listing in a click</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="partners container" aria-label="Partner brands">
-      <p class="partners-label">Partnering with large industrial brands</p>
-      <div class="partner-viewport">
-        <div class="partner-track" id="partnerTrack"></div>
-      </div>
-    </section>
-
-    <section class="feature-spotlight" aria-labelledby="feature-listings-title">
+    <section class="feature-spotlight" aria-labelledby="feature-connect-title">
       <div class="container feature-spotlight-inner">
         <div class="feature-grid">
           <div class="feature-copy">
-            <h2 id="feature-listings-title">Create detailed listings</h2>
-            <p>
-              Capture the fields industrial buyers expect: quantities, locations, specs, dates, and compliance notes, plus files when you need them.
-            </p>
+            <h2 id="feature-connect-title">Connect with genuine businesses across Australia</h2>
+            <p>Reach verified buyers and sellers in every state. Filter by category, location and volume to find exactly who you need.</p>
             <ul class="feature-points">
-              <li>Structured item details and dimensions in a clear layout</li>
-              <li>Description, damage, and contamination notes where they belong</li>
-              <li>Attachments for licences, SDS, photos, and other documents</li>
+              <li>Verified ABN businesses only, no anonymous traders</li>
+              <li>Coverage across every state and territory</li>
+              <li>Filter by category, price, volume and documents</li>
             </ul>
           </div>
+          <div class="feature-mock filter-mock" aria-hidden="true">
+            <div class="mock-title">Filters</div>
+            <div class="mock-section-title">Search</div>
+            <span class="mock-input mock-input--sm"></span>
+            <div class="mock-section-title">Category</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Chemicals</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Equipment</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Materials</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Organics</div>
+            <div class="mock-section-title">State</div>
+            <div class="mock-state-grid">
+              <div class="mock-check"><span class="mock-check-box"></span> NSW</div>
+              <div class="mock-check"><span class="mock-check-box"></span> WA</div>
+              <div class="mock-check"><span class="mock-check-box"></span> VIC</div>
+              <div class="mock-check"><span class="mock-check-box"></span> TAS</div>
+              <div class="mock-check"><span class="mock-check-box"></span> QLD</div>
+              <div class="mock-check"><span class="mock-check-box"></span> NT</div>
+              <div class="mock-check"><span class="mock-check-box"></span> SA</div>
+              <div class="mock-check"><span class="mock-check-box"></span> ACT</div>
+            </div>
+            <div class="mock-range-label">Price (AUD)</div>
+            <div class="mock-range-row">
+              <span class="mock-currency">$</span>
+              <span class="mock-range-min"></span>
+              <span class="mock-range-sep">-</span>
+              <span class="mock-range-max"></span>
+            </div>
+            <hr class="mock-hr">
+            <div class="mock-micro">Shipping</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Pickup available</div>
+            <div class="mock-check"><span class="mock-check-box"></span> Vehicle loading available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-spotlight" aria-labelledby="feature-list-title">
+      <div class="container feature-spotlight-inner">
+        <div class="feature-grid feature-grid--media-left">
           <div class="feature-mock" aria-hidden="true">
             <div class="mock-title">Item details</div>
             <div class="mock-field">
@@ -1791,20 +1973,6 @@
                 <span class="mock-pill">Unit</span>
               </div>
             </div>
-            <div class="mock-row3">
-              <div class="mock-field">
-                <span class="mock-label">L <span class="req">*</span></span>
-                <span class="mock-input"></span>
-              </div>
-              <div class="mock-field">
-                <span class="mock-label">W <span class="req">*</span></span>
-                <span class="mock-input"></span>
-              </div>
-              <div class="mock-field">
-                <span class="mock-label">H <span class="req">*</span></span>
-                <span class="mock-input"></span>
-              </div>
-            </div>
             <div class="mock-field">
               <span class="mock-label">Description <span class="req">*</span></span>
               <span class="mock-textarea"></span>
@@ -1814,140 +1982,58 @@
               <span>+ Add document</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="feature-spotlight" aria-labelledby="feature-browse-title">
-      <div class="container feature-spotlight-inner">
-        <div class="feature-grid feature-grid--browse">
-          <div class="feature-mock filter-mock" aria-hidden="true">
-            <div class="mock-title">Filters</div>
-            <div class="mock-section-title">Search</div>
-            <span class="mock-input mock-input--sm"></span>
-            <div class="mock-section-title">Category</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Chemicals</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Equipment</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Materials</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Organics</div>
-            <div class="mock-section-title">State</div>
-            <div class="mock-state-grid">
-              <div class="mock-check"><span class="mock-check-box"></span> NSW</div>
-              <div class="mock-check"><span class="mock-check-box"></span> WA</div>
-              <div class="mock-check"><span class="mock-check-box"></span> VIC</div>
-              <div class="mock-check"><span class="mock-check-box"></span> TAS</div>
-              <div class="mock-check"><span class="mock-check-box"></span> QLD</div>
-              <div class="mock-check"><span class="mock-check-box"></span> NT</div>
-              <div class="mock-check"><span class="mock-check-box"></span> SA</div>
-              <div class="mock-check"><span class="mock-check-box"></span> ACT</div>
-            </div>
-            <div class="mock-range-label">Price (AUD)</div>
-            <div class="mock-range-row">
-              <span class="mock-currency">$</span>
-              <span class="mock-range-min"></span>
-              <span class="mock-range-sep">-</span>
-              <span class="mock-range-max"></span>
-            </div>
-            <div class="mock-range-label">Min volume available</div>
-            <div class="mock-range-row">
-              <span class="mock-range-min"></span>
-              <span class="mock-range-sep">-</span>
-              <span class="mock-range-max"></span>
-            </div>
-            <hr class="mock-hr">
-            <div class="mock-micro">Shipping</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Pickup available</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Vehicle loading available</div>
-            <hr class="mock-hr">
-            <div class="mock-micro">Attachments</div>
-            <div class="mock-doc-sub">Document types</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Safety Data Sheet</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Brochure / Data Sheet</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Drawing</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Manual</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Certificate / Report</div>
-            <div class="mock-check"><span class="mock-check-box"></span> Sample Test Result</div>
-          </div>
           <div class="feature-copy">
-            <h2 id="feature-browse-title">Easily find what you're looking for</h2>
-            <p>
-              Slice listings by category, state, price, and volume, then narrow further with shipping options and the document types you need on file.
-            </p>
+            <h2 id="feature-list-title">Enter stock levels and sell to multiple buyers</h2>
+            <p>List once and let multiple buyers come to you. Capture specs, photos and compliance docs, then take secure payment through Stripe.</p>
             <ul class="feature-points">
-              <li>Search plus structured filters built for industrial stock</li>
-              <li>State coverage and practical shipping flags at a glance</li>
-              <li>Attachment filters for SDS, drawings, certificates, and more</li>
+              <li>Detailed listings with specs, photos and attachments</li>
+              <li>One listing, many interested buyers</li>
+              <li>Secure payment handled through Stripe</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="testimonials container" aria-label="Testimonials">
-      <h2>Testimonials</h2>
-      <p class="testimonials-sub">See what our customers have to say</p>
-      <div class="testimonials-grid">
-        <article class="testimonial-card">
-          <div class="testimonial-brand">
-            <img src="bingo-logo.png" width="160" height="38" alt="Bingo Industries">
+    <section class="market-flow container" id="how-it-works" aria-label="How Resource Marketplace works">
+      <header class="flow-head">
+        <span class="flow-eyebrow">How it works</span>
+        <h2>Three steps from surplus to sold</h2>
+      </header>
+      <ol class="flow-steps">
+        <li class="flow-step">
+          <span class="flow-num">01</span>
+          <div class="flow-step-body">
+            <h3>List or browse</h3>
+            <p>Sellers post surplus stock with photos, specs and location. Buyers search by category, volume and state.</p>
           </div>
-          <div class="testimonial-quote">
-            <p>Resource Marketplace found a new home for approximately 10.5 tonnes of oversupplied chemical that would&apos;ve otherwise been hoarded onsite for months or even years and finally would&apos;ve become waste.</p>
-            <p>Instead, RM found a new home for the chemical, where we traded it for cash, and saved ourselves disposal costs and diverted it from landfill!</p>
-            <p>The experience was great, everything was well organised and professional.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">02</span>
+          <div class="flow-step-body">
+            <h3>Sort the deal</h3>
+            <p>Enquire, negotiate and confirm freight with the other business directly. Pay securely through Stripe.</p>
           </div>
-          <p class="testimonial-meta">Mamdouh Elomar<br>Bingo Industries, NSW</p>
-        </article>
-        <article class="testimonial-card">
-          <div class="testimonial-brand">
-            <img src="osmoflo-logo.png" width="160" height="38" alt="Osmoflo">
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">03</span>
+          <div class="flow-step-body">
+            <h3>Move the stock</h3>
+            <p>Arrange pickup or delivery. Sellers clear space and recover cash, buyers get what they need for less.</p>
           </div>
-          <div class="testimonial-quote">
-            <p>Osmoflo operation procured IBCs of ACH to be utilised in our water treatment plants. The access to items that otherwise would be unused and potentially disposed of is a great initiative and aligns with our sustainable focused business.</p>
-            <p>The pricing is reflective of the ability to utilise items that may be sitting in stock indefinitely.</p>
-            <p>The process to order, transport and deliver in a timely manner was seamless and we will look to work with Resource Marketplace in the future.</p>
-          </div>
-          <p class="testimonial-meta">Todd Billing<br>Osmoflo, SA</p>
-        </article>
-        <article class="testimonial-card">
-          <div class="testimonial-brand">
-            <img src="downer-logo.svg" width="160" height="38" alt="Downer">
-          </div>
-          <div class="testimonial-quote">
-            <p>I was thoroughly impressed with how easy and efficient Resource Marketplace worked to turnaround a sale of redundant equipment!</p>
-            <p>We sold RM a set of valves and they worked with us very patiently through the process of paperwork, negotiation, and physical offloading of the goods.</p>
-            <p>RM negotiated very fairly on the items that would have otherwise found themselves in landfill - a great step towards positively impacting the environment in an industry where it is quite difficult to do so!</p>
-          </div>
-          <p class="testimonial-meta">Ray Gy<br>Downer, NSW</p>
-        </article>
+        </li>
+      </ol>
+      <div class="flow-cta">
+        <a class="btn-signup" href="#">Sign up</a>
       </div>
     </section>
 
-    <section class="market-flow container" id="how-it-works" aria-label="How Resource Marketplace works">
-      <header class="flow-head">
-        <h2>How it works</h2>
-      </header>
-
-      <ol class="flow-steps">
-        <li class="flow-step">
-          <span class="flow-step-label">Step 01</span>
-          <h3>List or browse</h3>
-          <p>Sellers post surplus stock with photos, specs and location. Buyers search by category, volume and state.</p>
-        </li>
-        <li class="flow-step">
-          <span class="flow-step-label">Step 02</span>
-          <h3>Sort the deal</h3>
-          <p>Enquire, negotiate and confirm freight with the other business directly. Pay securely through Stripe.</p>
-        </li>
-        <li class="flow-step">
-          <span class="flow-step-label">Step 03</span>
-          <h3>Move the stock</h3>
-          <p>Arrange pickup or delivery. Sellers clear space and recover cash, buyers get what they need for less.</p>
-        </li>
-      </ol>
-
-      <div class="flow-cta">
-        <a class="btn-signup" href="#">Sign up</a>
+    <section class="audience container" aria-labelledby="audience-title">
+      <h2 id="audience-title">Who do we help?</h2>
+      <div class="role-cards" id="role-cards"></div>
+      <div class="audience-industries">
+        <p class="audience-sub">Browse by industry</p>
+        <div id="solutions-nav"></div>
       </div>
     </section>
 
@@ -1983,9 +2069,47 @@
       <p class="impact-note">We're working with researchers at the University of Sydney to measure avoided landfill and emissions from every transaction, so buyers and sellers can back up their Scope 3 and ESG reporting with real numbers.</p>
     </section>
 
-    <section class="solutions container" aria-labelledby="solutions-title">
-      <h2 id="solutions-title">Where do you fit?</h2>
-      <div id="solutions-nav"></div>
+    <section class="cta-band">
+      <div class="container cta-band-inner">
+        <h2>Got a yard full of surplus?</h2>
+        <p>List it free and reach verified buyers across Australia. You only pay commission when something sells.</p>
+        <a class="btn-cta" href="#">List for free</a>
+      </div>
+    </section>
+
+    <section class="testimonials container" aria-label="Customer stories">
+      <header class="testimonials-head">
+        <h2>Businesses already turning surplus into cash</h2>
+      </header>
+      <div class="testimonials-grid">
+        <figure class="quote">
+          <blockquote>
+            <p>Resource Marketplace found a new home for around 10.5 tonnes of oversupplied chemical that would otherwise have become waste. We traded it for cash, saved disposal costs and diverted it from landfill.</p>
+          </blockquote>
+          <figcaption>
+            <img src="bingo-logo.png" width="130" height="30" alt="Bingo Industries">
+            <span>Mamdouh Elomar<br>Bingo Industries, NSW</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>
+            <p>We procured IBCs of ACH for our water treatment plants. Access to items that would otherwise be disposed of aligns with our sustainability focus, and the whole process was seamless.</p>
+          </blockquote>
+          <figcaption>
+            <img src="osmoflo-logo.png" width="130" height="30" alt="Osmoflo">
+            <span>Todd Billing<br>Osmoflo, SA</span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>
+            <p>Impressed with how easy and efficient it was to turn around a sale of redundant equipment. RM negotiated fairly on items that would otherwise have gone to landfill.</p>
+          </blockquote>
+          <figcaption>
+            <img src="downer-logo.svg" width="130" height="30" alt="Downer">
+            <span>Ray Gy<br>Downer, NSW</span>
+          </figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="faq container" id="faq" aria-labelledby="faq-title">
@@ -1994,32 +2118,24 @@
       <div class="faq-groups" id="faq-groups"></div>
     </section>
 
-    <section class="enquiry container" id="enquiry" aria-label="Enquiry form">
-      <div class="enquiry-head">
-        <h2>We're here to help</h2>
-        <p>Help getting started, questions about items, suggestions or features you want. We want to hear from you!</p>
-      </div>
-      <div class="enquiry-card">
-        <div class="enquiry-left">
-          <img src="main-logo.png" alt="" aria-hidden="true">
-          <strong>1800 407 519</strong>
-          <span>9am-5pm Weekdays</span>
-        </div>
-        <form class="enquiry-form" action="#" method="post">
-          <input type="text" name="name" placeholder="Name" aria-label="Name">
-          <input type="email" name="email" placeholder="Email" aria-label="Email">
-          <input type="tel" name="phone" placeholder="Phone Number (Optional)" aria-label="Phone Number">
-          <textarea name="message" placeholder="How can we help?" aria-label="How can we help?"></textarea>
-          <button type="submit">Submit</button>
+    <section class="newsletter container" aria-labelledby="newsletter-title">
+      <div class="newsletter-inner">
+        <h2 id="newsletter-title">Stay in the loop</h2>
+        <p>Get notified about new surplus listings and circular economy news. No spam, unsubscribe any time.</p>
+        <form class="newsletter-form" action="#" method="post" novalidate>
+          <input type="email" name="email" placeholder="you@company.com.au" aria-label="Email address" autocomplete="email" required>
+          <button type="submit">Notify me</button>
         </form>
+        <p class="newsletter-fine">We'll only email you about Resource Marketplace.</p>
       </div>
     </section>
+
     </div>
 
     <div id="view-use-case" hidden></div>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="contact">
     <div class="container site-footer-inner">
       <div class="footer-brand">
         <a href="#/" class="footer-brand-logo" aria-label="Resource Marketplace home">
@@ -2110,7 +2226,7 @@
     viewHome: document.getElementById('view-home'),
     viewUseCase: document.getElementById('view-use-case'),
     siteLogo: document.querySelector('.site-logo'),
-    enquiry: document.getElementById('enquiry'),
+    contact: document.getElementById('contact'),
   };
 
   // ---------------------------------------------------------------------------
@@ -2156,27 +2272,25 @@
     });
   }
 
+  function renderRoleCards() {
+    const root = document.getElementById('role-cards');
+    if (!root) return;
+    root.innerHTML = USE_CASE_DATA.roles
+      .map(
+        (role) =>
+          rawHtml`<a class="role-card" href="#/role/${role.slug}"><span class="role-card-title">${escapeHtml(role.name)}</span><span class="role-card-teaser">${escapeHtml(role.cardTeaser)}</span></a>`
+      )
+      .join('');
+  }
+
   function renderSolutionsNav() {
     if (!dom.solutionsNav) return;
-
-    const dirLinks = (items, routePrefix) =>
-      items
-        .map(
-          (item) =>
-            rawHtml`<a class="dir-link" href="#/${routePrefix}/${item.slug}"><span class="dir-name">${escapeHtml(item.name)}</span></a>`
-        )
-        .join('');
-
-    dom.solutionsNav.innerHTML = rawHtml`
-      <div class="solutions-group">
-        <div class="solutions-group-head"><h3>By industry</h3></div>
-        <div class="dir-grid">${dirLinks(USE_CASE_DATA.industries, 'industry')}</div>
-      </div>
-      <div class="solutions-group">
-        <div class="solutions-group-head"><h3>By team or role</h3></div>
-        <div class="dir-grid dir-grid--roles">${dirLinks(USE_CASE_DATA.roles, 'role')}</div>
-      </div>
-    `;
+    dom.solutionsNav.innerHTML = USE_CASE_DATA.industries
+      .map(
+        (item) =>
+          rawHtml`<a class="dir-link" href="#/industry/${item.slug}"><span class="dir-name">${escapeHtml(item.name)}</span></a>`
+      )
+      .join('');
   }
 
   // ---------------------------------------------------------------------------
@@ -2319,7 +2433,7 @@
     document.title = SITE.title;
 
     if (location.hash === '#/enquiry' || location.hash === '#enquiry') {
-      dom.enquiry?.scrollIntoView({ behavior: 'smooth' });
+      dom.contact?.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
@@ -2376,11 +2490,12 @@
     }).join('');
   }
 
-  function initPartnerMarquee() {
-    const track = document.getElementById('partnerTrack');
-    if (!track) return;
-    const imgs = PARTNER_LOGOS.map((l) => '<img class="partner-logo" src="' + l.src + '" alt="' + escapeHtml(l.alt) + '">').join('');
-    track.innerHTML = imgs.repeat(4);
+  function renderPartnerStrip() {
+    const row = document.getElementById('partnerTrack');
+    if (!row) return;
+    row.innerHTML = PARTNER_LOGOS.map(
+      (l) => '<img class="partner-logo" src="' + l.src + '" alt="' + escapeHtml(l.alt) + '" height="46" loading="lazy">'
+    ).join('');
   }
 
   // Inject FAQPage structured data (JSON-LD) so search engines can show rich results
@@ -2423,8 +2538,9 @@
   // ---------------------------------------------------------------------------
   initFooterYear();
   initVideoEmbed();
+  renderRoleCards();
   renderSolutionsNav();
-  initPartnerMarquee();
+  renderPartnerStrip();
   renderFaq();
   renderFaqSchema();
   initFaqAccordion();
